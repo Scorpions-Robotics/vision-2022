@@ -1,0 +1,5 @@
+{
+    "python.defaultInterpreterPath": "python",
+    "python.formatting.provider": "black",
+    "editor.formatOnSave": true
+}

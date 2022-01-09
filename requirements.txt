@@ -1,0 +1,9 @@
+pynetworktables
+numpy
+pyzmq
+opencv-contrib-python
+imutils
+python-decouple
+black
+flask
+requests
