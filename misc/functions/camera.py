@@ -13,16 +13,16 @@ camera_index = int(config.get("camera", "CAMERA_INDEX"))
 
 
 # Gets the dimensions of the camera.
-def get_dimensions(camera, x_y):
+def get_dimensions(cap, x_y):
     if x_y == "x":
         try:
-            dim_x = camera.get(3)
+            dim_x = cap.get(3)
         except Exception:
             dim_x = 0
         return dim_x
     if x_y == "y":
         try:
-            dim_y = camera.get(4)
+            dim_y = cap.get(4)
         except Exception:
             dim_y = 0
         return dim_y
@@ -36,17 +36,17 @@ def os_action():
             break
         set_camera.set_exposure()
         time.sleep(0.5)
-        camera = cv2.VideoCapture(camera_index)
+        cap = cv2.VideoCapture(camera_index)
 
     else:
         while True:
             subprocess.call(["python", "misc/camera/fix_camera.py"], shell=False)
             break
-        camera = cv2.VideoCapture(camera_index)
+        cap = cv2.VideoCapture(camera_index)
         time.sleep(1)
-        camera.set(cv2.CAP_PROP_AUTO_EXPOSURE, 0.25)
-        camera.set(15, int(config.get("camera", "WINDOWS_HOOP_EXPOSURE")))
-    return camera
+        cap.set(cv2.CAP_PROP_AUTO_EXPOSURE, 0.25)
+        cap.set(15, int(config.get("camera", "WINDOWS_HOOP_EXPOSURE")))
+    return cap
 
 
 # Takes a frame and returns the frame white balanced.

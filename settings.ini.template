@@ -36,7 +36,7 @@ KNOWN_DISTANCE = 124
 [colors]
 ; Set upper and lower HSV values for the requested color.
 
-; tuple(config.get("colors", "HOOP_HSV_{LOWER|UPPER}}").split("\n"))
+; tuple(map(int, config.get("colors", "HOOP_HSV_{UPPER|LOWER}").split("\n")))
 HOOP_HSV_LOWER = 40
                 60
                 60
@@ -44,7 +44,7 @@ HOOP_HSV_UPPER = 75
                 255
                 255
 
-; tuple(config.get("colors", "RED_BALL_HSV_{LOWER|UPPER}}").split("\n"))
+; tuple(map(int, config.get("colors", "RED_BALL_HSV_{UPPER|LOWER}").split("\n")))
 RED_BALL_HSV_LOWER = 0
                     60
                     60
@@ -52,7 +52,7 @@ RED_BALL_HSV_UPPER = 10
                     255
                     255
 
-; tuple(config.get("colors", "BLUE_BALL_HSV_{LOWER|UPPER}}").split("\n"))
+; tuple(map(int, config.get("colors", "BLUE_BALL_HSV_{UPPER|LOWER}").split("\n")))
 BLUE_BALL_HSV_LOWER = 170
                     60
                     60

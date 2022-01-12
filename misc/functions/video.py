@@ -39,13 +39,11 @@ def is_detected(key):
 # Takes a frame and returns the frame with the crosshair drawn on it.
 def crosshair(frame):
     color = (0, 255, 0)
-    fpt1 = ((frame_width / 2) - 20), (frame_height // 2)
 
-    fpt2 = ((frame_width / 2) + 20), (frame_height // 2)
-
-    spt1 = (frame_width // 2), ((frame_height / 2) - 20)
-
-    spt2 = (frame_width // 2), ((frame_height / 2) + 20)
+    fpt1 = frame_width // 2 - 20, frame_height // 2
+    fpt2 = frame_width // 2 + 20, frame_height // 2
+    spt1 = frame_width // 2, frame_height // 2 - 20
+    spt2 = frame_width // 2, frame_height // 2 + 20
 
     crosshair = cv2.line(
         frame,

@@ -11,11 +11,11 @@ from misc.functions import camera
 config = ConfigParser()
 config.read("settings.ini")
 
-camera = camera.os_action()
+cap = camera.os_action()
 
 while True:
     try:
-        grabbed, frame = camera.read()
+        grabbed, frame = cap.read()
 
         if grabbed == True:
 
@@ -25,12 +25,12 @@ while True:
                 height=int(config.get("camera", "FRAME_HEIGHT")),
             )
 
-            if int(config.get("fancy_stuff", "FLIP_FRAME")) == 1:
+            if int(config.get("fancy_stuff", "FLIP_FRAME")):
                 frame = cv2.flip(frame, 1)
 
             frame = imutils.rotate(frame, int(config.get("fancy_stuff", "FRAME_ANGLE")))
 
-            if int(config.get("fancy_stuff", "WHITE_BALANCE")) == 1:
+            if int(config.get("fancy_stuff", "WHITE_BALANCE")):
                 frame = camera.white_balance(frame)
 
             cv2.imshow("img", frame)
@@ -41,12 +41,12 @@ while True:
 
         else:
             try:
-                camera = camera.os_action()
+                cap = camera.os_action()
             except Exception:
                 pass
 
     except KeyboardInterrupt:
         break
 
-camera.release()
+cap.release()
 cv2.destroyAllWindows()

@@ -11,7 +11,7 @@ def nothing(x):
     pass
 
 
-camera = camera.os_action()
+cap = camera.os_action()
 
 cv2.namedWindow("Trackbars")
 
@@ -63,5 +63,5 @@ while True:
         break
 
 
-camera.release()
+cap.release()
 cv2.destroyAllWindows()

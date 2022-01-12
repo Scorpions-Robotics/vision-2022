@@ -21,7 +21,7 @@ def is_connected():
 
 # Initialize NetworkTables.
 def nt_init():
-    if int(config.get("network", "NETWORKTABLES_TEST_MODE")):
+    if int(config.get("network", "NETWORKTABLES_SERVER_MODE")):
         NetworkTables.initialize()
     else:
         NetworkTables.initialize(server=nt_server)
