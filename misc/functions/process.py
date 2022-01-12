@@ -1,3 +1,7 @@
+import cv2
+import numpy as np
+
+
 # Processes the frame, detects the cascade classifier and returns the frame with squares drawn on the detected object.
 def vision(frame, cascade_classifier):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)

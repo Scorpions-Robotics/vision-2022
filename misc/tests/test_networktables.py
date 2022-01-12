@@ -21,8 +21,11 @@ while True:
         d = try_get_value("D")
         r = try_get_value("R")
         b = try_get_value("B")
+        alliance = try_get_value("alliance")
+        period = try_get_value("period")
+        position = table.getNumber("position",0)
 
-        print(f"X: {x} Y: {y} W: {w} H: {h} D: {d} R: {r} B: {b}")
+        print(f"X: {x} Y: {y} W: {w} H: {h} D: {d} R: {r} B: {b} alliance: {alliance} period: {period} position: {position}")
 
     except KeyboardInterrupt:
         break

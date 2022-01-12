@@ -3,22 +3,29 @@ import imutils
 import zmq
 import socket
 from datetime import datetime
-from decouple import config
-from misc.functions import functions
+from configparser import ConfigParser
+from misc.functions import network
+from misc.functions import camera
+from misc.functions import video
+from misc.functions import process
+from misc.functions import flask
 
+
+config = ConfigParser()
+config.read("settings.ini")
 
 print(f"Starting vision-processing...\nTime (UTC): {datetime.utcnow()}")
 
-hsv_lower = (int(config("H_LOWER")), int(config("S_LOWER")), int(config("V_LOWER")))
-hsv_upper = (int(config("H_UPPER")), int(config("S_UPPER")), int(config("V_UPPER")))
+hoop_hsv_upper = tuple(config.get("colors", "HOOP_HSV_{UPPER}}").split("\n"))
+hoop_hsv_lower = tuple(config.get("colors", "HOOP_HSV_{LOWER}").split("\n"))
 
-kpw = int(config("KNOWN_PIXEL_WIDTH"))
-kd = int(config("KNOWN_DISTANCE"))
-kw = int(config("KNOWN_WIDTH"))
+kpw = int(config.get("calibration", "KNOWN_PIXEL_WIDTH"))
+kd = int(config.get("calibration", "KNOWN_DISTANCE"))
+kw = int(config.get("calibration", "KNOWN_WIDTH"))
 
-table = functions.nt_init()
+table = network.nt_init()
 
-camera = functions.os_action()
+camera = camera.os_action()
 
 cascade_classifier = cv2.CascadeClassifier("cascade.xml")
 
@@ -28,7 +35,7 @@ context = zmq.Context()
 footage_socket = context.socket(zmq.PUB)
 footage_socket.connect(f"tcp://{host_ip}:5555")
 
-flask_popen = functions.run_flask()
+flask_popen = flask.run_flask()
 
 
 try:
@@ -42,28 +49,26 @@ try:
 
                 frame = imutils.resize(
                     frame,
-                    width=int(config("FRAME_WIDTH")),
-                    height=int(config("FRAME_HEIGHT")),
+                    width=int(config.get("camera", "FRAME_WIDTH")),
+                    height=int(config.get("camera", "FRAME_HEIGHT")),
                 )
 
-                if int(config("FLIP_FRAME")):
+                if int(config.get("fancy_stuff", "FLIP_FRAME")):
                     frame = cv2.flip(frame, 1)
 
-                frame = imutils.rotate(frame, int(config("FRAME_ANGLE")))
+                frame = imutils.rotate(
+                    frame, int(config.get("fancy_stuff", "FRAME_ANGLE"))
+                )
 
-                if int(config("WHITE_BALANCE")):
-                    frame = functions.white_balance(frame)
+                if int(config.get("fancy_stuff", "WHITE_BALANCE")):
+                    frame = camera.white_balance(frame)
 
-                if int(config("FILTER_FRAME")):
-                    hsv_mask = functions.mask_color(frame, (hsv_lower), (hsv_upper))
-                    result, x, y, w, h = functions.vision(hsv_mask, cascade_classifier)
+                hsv_mask = process.mask_color(frame, (hoop_hsv_lower), (hoop_hsv_upper))
+                result, x, y, w, h = process.vision(hsv_mask, cascade_classifier)
 
-                else:
-                    result, x, y, w, h = functions.vision(frame, cascade_classifier)
-
-                d = functions.current_distance(kpw, kd, kw, w)
-                r = functions.calculate_rotation(int(config("FRAME_WIDTH")), x, w)
-                b = int(functions.is_detected(d))
+                d = video.current_distance(kpw, kd, kw, w)
+                r = video.rotation(int(config("FRAME_WIDTH")), x, w)
+                b = int(video.is_detected(d))
 
                 try:
                     d = round(d, 2)
@@ -83,16 +88,16 @@ try:
                     print(f"X: {x} Y: {y} W: {w} H: {h} D: {d} R: {r} B: {b}")
 
                 if int(config("SHOW_FRAME")):
-                    cv2.imshow("Result", functions.crosshair(result))
+                    cv2.imshow("Result", video.crosshair(result))
                     cv2.waitKey(1)
 
                 if int(config("STREAM_FRAME")):
-                    encoded, buffer = cv2.imencode(".jpg", functions.crosshair(frame))
+                    encoded, buffer = cv2.imencode(".jpg", video.crosshair(frame))
                     footage_socket.send(buffer)
 
             else:
                 try:
-                    camera = functions.os_action()
+                    camera = camera.os_action()
                 except Exception:
                     pass
 

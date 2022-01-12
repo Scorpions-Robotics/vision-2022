@@ -1,14 +1,16 @@
+import os
 import subprocess
 import platform
 import argparse
-from misc.functions import functions
-from decouple import config
-import os
+from misc.functions import network
+from configparser import ConfigParser
+
+
+config = ConfigParser()
+config.read("settings.ini")
 
 if platform.system() != "Linux":
     exit("error: This can only run on Linux.")
-
-functions.systemctl_log()
 
 try:
 
@@ -18,7 +20,7 @@ try:
     )
     args = parser.parse_args()
 
-    if functions.is_connected():
+    if network.is_connected():
         while True:
             subprocess.run(
                 [
@@ -87,8 +89,8 @@ Requires=network-online.target
 After=network-online.target
 Description="{args.service_name} Service"
 [Service]
-WorkingDirectory={config("WORKING_DIR")}
-ExecStart=/usr/bin/python {config("WORKING_DIR")}vision.py
+WorkingDirectory={config.get("system","WORKING_DIR")}
+ExecStart=/usr/bin/python {config.get("system","WORKING_DIR")}vision.py
 User={args.service_name}
 [Install]
 WantedBy=multi-user.target"""

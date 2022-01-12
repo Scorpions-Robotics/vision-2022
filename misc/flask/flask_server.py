@@ -1,8 +1,12 @@
-from flask import Flask, render_template, Response
-from decouple import config
 import cv2
 import numpy as np
 import zmq
+from flask import Flask, render_template, Response
+from configparser import ConfigParser
+
+
+config = ConfigParser()
+config.read("settings.ini")
 
 context = zmq.Context()
 footage_socket = context.socket(zmq.SUB)
@@ -33,4 +37,4 @@ def video_feed():
 
 
 if __name__ == "__main__":
-    app.run(host=config("JETSON_IP"))
+    app.run(host=config.get("network", "JETSON_IP"))

@@ -1,3 +1,15 @@
+import requests
+from networktables import NetworkTables
+from configparser import ConfigParser
+
+
+config = ConfigParser()
+config.read("settings.ini")
+
+nt_server = config.get("network", "NETWORKTABLES_SERVER")
+nt_table = config.get("network", "NETWORKTABLES_TABLE")
+
+
 # Checks internet connection.
 def is_connected():
     try:
@@ -9,14 +21,14 @@ def is_connected():
 
 # Initialize NetworkTables.
 def nt_init():
-    if int(config("NETWORKTABLES_TEST_MODE")):
+    if int(config.get("network", "NETWORKTABLES_TEST_MODE")):
         NetworkTables.initialize()
     else:
-        NetworkTables.initialize(server=config("NETWORKTABLES_SERVER"))
-    return NetworkTables.getTable(config("NETWORKTABLES_TABLE"))
+        NetworkTables.initialize(server=nt_server)
+    return NetworkTables.getTable(nt_table)
 
 
 # Initialize NetworkTables listener.
 def nt_listener_init():
-    NetworkTables.initialize(server=config("NETWORKTABLES_SERVER"))
-    return NetworkTables.getTable(config("NETWORKTABLES_TABLE"))
+    NetworkTables.initialize(server=nt_server)
+    return NetworkTables.getTable(nt_table)
