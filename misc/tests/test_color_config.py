@@ -4,4 +4,4 @@ config = ConfigParser()
 config.read("settings.ini")
 
 for item, item_result in config.items("colors"):
-    print(item, tuple(item_result.split("\n")))
+    print(item, tuple(map(int, item_result.split("\n"))))
