@@ -1,12 +1,10 @@
-[settings]
 ; This is a template of settings.ini.
 ; Copy this file and rename it to settings.ini. Then edit it to your needs.
 
-; Working directory, aka where this file is located. Don't forget the trailing slash.
-WORKING_DIR = /home/scorpions/repos/vision-2022/
 
+[network]
 ; Jetson's IP address.
-JETSON_IP = 10.76.72.10 
+JETSON_IP = 10.76.72.10
 
 ; Set to 1 if you are not using roboRIO as the server.
 NETWORKTABLES_SERVER_MODE = 1
@@ -18,10 +16,13 @@ NETWORKTABLES_SERVER = 10.76.72.10
 ; Set your NetworkTables table name. In our case it is "vision".
 NETWORKTABLES_TABLE = vision
 
-; Width and height of the frame. Default is 320x240. Use 320x240 on coprocessor for more performance. You can use any resolution as long as you keep the ratio at 4:3.
-FRAME_WIDTH = 320
-FRAME_HEIGHT = 240
 
+[system]
+; Working directory, aka where this file is located. Don't forget the trailing slash.
+WORKING_DIR = /home/scorpions/repos/vision-2022/
+
+
+[calibration]
 ; In inches. Measure the real width of the hoop.
 KNOWN_WIDTH = 43
 
@@ -31,15 +32,51 @@ KNOWN_PIXEL_WIDTH = 231
 ; In inches. Measure the real distance from the hoop to the camera.
 KNOWN_DISTANCE = 124
 
+
+[colors]
+; Set upper and lower HSV values for the requested color.
+
+; tuple(map(int, config.get("colors", "HOOP_HSV_{UPPER|LOWER}").split("\n")))
+HOOP_HSV_LOWER = 40
+                60
+                60
+HOOP_HSV_UPPER = 75
+                255
+                255
+
+; tuple(map(int, config.get("colors", "RED_BALL_HSV_{UPPER|LOWER}").split("\n")))
+RED_BALL_HSV_LOWER = 0
+                    60
+                    60
+RED_BALL_HSV_UPPER = 10
+                    255
+                    255
+
+; tuple(map(int, config.get("colors", "BLUE_BALL_HSV_{UPPER|LOWER}").split("\n")))
+BLUE_BALL_HSV_LOWER = 170
+                    60
+                    60
+BLUE_BALL_HSV_UPPER = 180
+                    255
+                    255
+
+
+[camera]
 ; Index number of the camera to use. Default is -1.
 CAMERA_INDEX = -1
 
-; Only used on Windows. Default is -10.
-WINDOWS_EXPOSURE = -10
-
 ; Only used on Linux. Gets values between 1 and 5000. Default is 3.
-LINUX_EXPOSURE = 3
+LINUX_HOOP_EXPOSURE = 3
 
+; Only used on Windows. Default is -10.
+WINDOWS_HOOP_EXPOSURE = -10
+
+; Width and height of the frame. Default is 320x240. Use 320x240 on coprocessor for more performance. You can use any resolution as long as you keep the ratio at 4:3.
+FRAME_WIDTH = 320
+FRAME_HEIGHT = 240
+
+
+[fancy_stuff]
 ; Flip frame or not. Gets values 0 or 1. Default is 1.
 FLIP_FRAME = 0
 
@@ -57,14 +94,3 @@ STREAM_FRAME = 1
 
 ; Decide if the values are printed or not. Gets values 0 or 1. Default is 1.
 PRINT_VALUES = 1
-
-;Decide if the frame is filtered by the HSV values or not. Gets values 0 or 1. Default is 1.
-FILTER_FRAME = 1
-
-; Set upper and lower HSV values for the requested color.
-H_LOWER = 40
-S_LOWER = 60
-V_LOWER = 60
-H_UPPER = 75
-S_UPPER = 255
-V_UPPER = 255

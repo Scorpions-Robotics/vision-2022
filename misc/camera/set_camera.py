@@ -1,8 +1,11 @@
 import subprocess
-from decouple import config
+from configparser import ConfigParser
 
 
-exposure = config("LINUX_EXPOSURE")
+config = ConfigParser()
+config.read("settings.ini")
+
+exposure = config.get("camera", "LINUX_HOOP_EXPOSURE")
 
 
 def set_exposure():

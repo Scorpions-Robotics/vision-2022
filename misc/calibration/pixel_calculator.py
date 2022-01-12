@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 sys.path.append(str(Path("..").absolute().parent))
-from misc.functions import functions
+from misc.functions import process
 
 
 x = 0
@@ -32,7 +32,7 @@ lineType = 2
 while True:
     try:
 
-        result, x, y, w, h = functions.vision(frame, cascade_classifier)
+        result, x, y, w, h = process.vision(frame, cascade_classifier)
 
         if count == 0:
             print(f"X: {x} Y: {y} W: {w} H: {h}")

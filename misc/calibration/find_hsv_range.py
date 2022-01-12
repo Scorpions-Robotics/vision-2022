@@ -4,14 +4,14 @@ import sys
 from pathlib import Path
 
 sys.path.append(str(Path("..").absolute().parent))
-from misc.functions import functions
+from misc.functions import camera
 
 
 def nothing(x):
     pass
 
 
-camera = functions.os_action()
+cap = camera.os_action()
 
 cv2.namedWindow("Trackbars")
 
@@ -44,11 +44,8 @@ while True:
     upper_range = np.array([u_h, u_s, u_v])
 
     mask = cv2.inRange(hsv, lower_range, upper_range)
-
     res = cv2.bitwise_and(frame, frame, mask=mask)
-
     mask_3 = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
-
     stacked = np.hstack((mask_3, frame, res))
 
     cv2.imshow("Trackbars", cv2.resize(stacked, None, fx=0.4, fy=0.4))
@@ -66,5 +63,5 @@ while True:
         break
 
 
-camera.release()
+cap.release()
 cv2.destroyAllWindows()

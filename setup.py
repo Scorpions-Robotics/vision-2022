@@ -1,14 +1,16 @@
+import os
 import subprocess
 import platform
 import argparse
-from misc.functions import functions
-from decouple import config
+from misc.functions import network
+from configparser import ConfigParser
 
+
+config = ConfigParser()
+config.read("settings.ini")
 
 if platform.system() != "Linux":
     exit("error: This can only run on Linux.")
-
-functions.systemctl_log()
 
 try:
 
@@ -18,9 +20,9 @@ try:
     )
     args = parser.parse_args()
 
-    if functions.is_connected():
+    if network.is_connected():
         while True:
-            subprocess.call(
+            subprocess.run(
                 [
                     "sudo",
                     "python",
@@ -40,13 +42,13 @@ try:
         )
 
     while True:
-        subprocess.call(
+        subprocess.run(
             ["sudo", "addgroup", "--system", f"{args.service_name}"], shell=False
         )
         break
 
     while True:
-        subprocess.call(
+        subprocess.run(
             [
                 "sudo",
                 "adduser",
@@ -63,20 +65,20 @@ try:
         break
 
     while True:
-        subprocess.call(
+        subprocess.run(
             ["sudo", "usermod", "-a", "-G", "sudo", f"{args.service_name}"], shell=False
         )
         break
 
     while True:
-        subprocess.call(
+        subprocess.run(
             ["sudo", "usermod", "-a", "-G", "video", f"{args.service_name}"],
             shell=False,
         )
         break
 
     while True:
-        subprocess.call(
+        subprocess.run(
             ["sudo", "touch", f"/lib/systemd/system/{args.service_name}.service"],
             shell=False,
         )
@@ -87,10 +89,8 @@ Requires=network-online.target
 After=network-online.target
 Description="{args.service_name} Service"
 [Service]
-WorkingDirectory={config("WORKING_DIR")}
-ExecStart=/usr/bin/python {config("WORKING_DIR")}vision.py
-StandardOutput=append:{config("WORKING_DIR")}/log/stdout.log
-StandardError=append:{config("WORKING_DIR")}/log/stderr.log
+WorkingDirectory={config.get("system","WORKING_DIR")}
+ExecStart=/usr/bin/python {config.get("system","WORKING_DIR")}vision.py
 User={args.service_name}
 [Install]
 WantedBy=multi-user.target"""
@@ -99,14 +99,22 @@ WantedBy=multi-user.target"""
         f.write(service)
 
     while True:
-        subprocess.call(["sudo", "systemctl", "daemon-reload"], shell=False)
+        subprocess.run(["sudo", "systemctl", "daemon-reload"], shell=False)
         break
 
     while True:
-        subprocess.call(
+        subprocess.run(
             ["sudo", "systemctl", "enable", f"{args.service_name}"], shell=False
         )
         break
+
+    if not os.path.isfile("settings.ini"):
+        print("No settings.ini found. Creating one.")
+        while True:
+            subprocess.run(
+                ["sudo", "cp", "settings.ini.template", "settings.ini"], shell=False
+            )
+            break
 
     print("vision-2022 is installed and enabled. It will start automatically on boot.")
 
