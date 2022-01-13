@@ -34,6 +34,17 @@ def nt_listener_init():
     return NetworkTables.getTable(nt_table)
 
 
-def nt_get_mode():
+def nt_get_info():
     table = NetworkTables.getTable(nt_table)
-    return table.getString("mode")
+    return table.getString("mode", "hoop"), table.getString("alliance", "blue")
+
+
+def alliance(alliance):
+    if alliance == "red":
+        return tuple(
+            map(int, config.get("colors", "RED_BALL_HSV_UPPER").split("\n"))
+        ), tuple(map(int, config.get("colors", "RED_BALL_HSV_LOWER").split("\n")))
+    elif alliance == "blue":
+        return tuple(
+            map(int, config.get("colors", "BLUE_BALL_HSV_UPPER").split("\n"))
+        ), tuple(map(int, config.get("colors", "BLUE_BALL_HSV_LOWER").split("\n")))

@@ -59,19 +59,9 @@ def set_auto_exposure(auto_exposure):
 
 
 # Switch camera modes.
-def switch(mode):
+def switch(mode="hoop"):
     count = 0
-    if mode == "ball" and count == 0:
-        if platform.system() == "Linux":
-            set_camera.ball_exposure()
-            time.sleep(0.5)
-            cap = cv2.VideoCapture(camera_index)
-
-        else:
-            cap = set_auto_exposure(0.75)
-        count += 1
-
-    elif mode == "hoop" and count == 1:
+    if count == 0:
         if platform.system() == "Linux":
             set_camera.hoop_exposure()
             time.sleep(0.5)
@@ -80,7 +70,17 @@ def switch(mode):
         else:
             cap = set_auto_exposure(0.25)
             cap.set(15, int(config.get("camera", "WINDOWS_HOOP_EXPOSURE")))
-        count -= 1
+        count += 1
+
+    # elif mode == "ball" and count == 1:
+    #     if platform.system() == "Linux":
+    #         set_camera.ball_exposure()
+    #         time.sleep(0.5)
+    #         cap = cv2.VideoCapture(camera_index)
+
+    #     else:
+    #         cap = set_auto_exposure(0.75)
+    #     count -= 1
 
     return cap
 
