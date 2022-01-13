@@ -11,6 +11,7 @@ config.read("settings.ini")
 
 camera_index = int(config.get("camera", "CAMERA_INDEX"))
 
+count = 0
 
 # Gets the dimensions of the camera.
 def get_dimensions(cap, x_y):
@@ -59,8 +60,8 @@ def set_auto_exposure(auto_exposure):
 
 
 # Switch camera modes.
-def switch(mode):
-    count = 0
+def switch(original_cap, mode):
+    global count
     if mode == "ball" and count == 0:
         if platform.system() == "Linux":
             set_camera.ball_exposure()
@@ -81,8 +82,10 @@ def switch(mode):
             cap = set_auto_exposure(0.25)
             cap.set(15, int(config.get("camera", "WINDOWS_HOOP_EXPOSURE")))
         count -= 1
-
-    return cap
+    try:
+        return cap
+    except UnboundLocalError:
+        return original_cap
 
 
 # Takes a frame and returns the frame white balanced.

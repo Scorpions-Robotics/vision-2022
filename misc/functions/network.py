@@ -36,4 +36,4 @@ def nt_listener_init():
 
 def nt_get_mode():
     table = NetworkTables.getTable(nt_table)
-    return table.getString("mode")
+    return table.getString("mode", "hoop")

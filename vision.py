@@ -48,7 +48,7 @@ try:
             if grabbed == True:
 
                 mode = network.nt_get_mode()
-                camera.switch(mode)
+                cap = camera.switch(cap, mode)
 
                 frame = imutils.resize(
                     frame,
