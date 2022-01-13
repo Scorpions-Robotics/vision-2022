@@ -3,6 +3,7 @@ import time
 import subprocess
 import cv2
 import numpy as np
+import imutils
 from configparser import ConfigParser
 from misc.camera import set_camera
 
@@ -12,6 +13,16 @@ config.read("settings.ini")
 camera_index = int(config.get("camera", "CAMERA_INDEX"))
 
 count = 0
+
+
+# Resolution initialization.
+def resolution_init(frame):
+    return imutils.resize(
+        frame,
+        width=int(config.get("camera", "FRAME_WIDTH")),
+        height=int(config.get("camera", "FRAME_HEIGHT")),
+    )
+
 
 # Gets the dimensions of the camera.
 def get_dimensions(cap, x_y):
@@ -30,7 +41,7 @@ def get_dimensions(cap, x_y):
 
 
 # Takes action and defines the camera based on the OS type.
-def os_action():
+def camera_init():
     path = r"misc/camera/fix_camera.py"
 
     while True:
@@ -59,7 +70,7 @@ def set_auto_exposure(auto_exposure):
     return cap
 
 
-# Switch camera modes.
+# Switch camera modes. Mode should be "hoop" at first, or might crash.
 def switch(original_cap, mode):
     global count
     if mode == "ball" and count == 0:
@@ -82,6 +93,7 @@ def switch(original_cap, mode):
             cap = set_auto_exposure(0.25)
             cap.set(15, int(config.get("camera", "WINDOWS_HOOP_EXPOSURE")))
         count -= 1
+
     try:
         return cap
     except UnboundLocalError:

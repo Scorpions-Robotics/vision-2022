@@ -11,7 +11,7 @@ def nothing(x):
     pass
 
 
-cap = camera.os_action()
+cap = camera.camera_init()
 
 cv2.namedWindow("Trackbars")
 

@@ -1,5 +1,11 @@
 import cv2
+import sys
+import imutils
+from pathlib import Path
 from configparser import ConfigParser
+
+sys.path.append(str(Path("..").absolute().parent))
+from misc.functions import camera
 
 
 config = ConfigParser()
@@ -34,6 +40,34 @@ def current_distance(kpw, kd, kw, w):
 # Checks if the hoop is in the frame.
 def is_detected(key):
     return key is not None
+
+
+# Safely rounds input to 2 decimal places.
+def safe_round(input):
+    try:
+        return round(input, 2)
+    except Exception:
+        return input
+
+
+# Video settings.
+def settings(frame, resolution_rate: int or float = 1):
+
+    frame = imutils.resize(
+        frame,
+        width=int(config.get("camera", "FRAME_WIDTH")) * resolution_rate,
+        height=int(config.get("camera", "FRAME_HEIGHT")) * resolution_rate,
+    )
+
+    if int(config.get("fancy", "FLIP_FRAME")):
+        frame = cv2.flip(frame, 1)
+
+    frame = imutils.rotate(frame, int(config.get("fancy", "FRAME_ANGLE")))
+
+    if int(config.get("fancy", "WHITE_BALANCE")):
+        frame = camera.white_balance(frame)
+
+    return frame
 
 
 # Takes a frame and returns the frame with the crosshair drawn on it.

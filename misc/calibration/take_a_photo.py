@@ -11,7 +11,7 @@ from misc.functions import camera
 config = ConfigParser()
 config.read("settings.ini")
 
-cap = camera.os_action()
+cap = camera.camera_init()
 
 while True:
     try:
@@ -25,12 +25,12 @@ while True:
                 height=int(config.get("camera", "FRAME_HEIGHT")),
             )
 
-            if int(config.get("fancy_stuff", "FLIP_FRAME")):
+            if int(config.get("fancy", "FLIP_FRAME")):
                 frame = cv2.flip(frame, 1)
 
-            frame = imutils.rotate(frame, int(config.get("fancy_stuff", "FRAME_ANGLE")))
+            frame = imutils.rotate(frame, int(config.get("fancy", "FRAME_ANGLE")))
 
-            if int(config.get("fancy_stuff", "WHITE_BALANCE")):
+            if int(config.get("fancy", "WHITE_BALANCE")):
                 frame = camera.white_balance(frame)
 
             cv2.imshow("img", frame)
@@ -41,7 +41,7 @@ while True:
 
         else:
             try:
-                cap = camera.os_action()
+                cap = camera.camera_init()
             except Exception:
                 pass
 
