@@ -30,22 +30,55 @@ def get_dimensions(cap, x_y):
 
 # Takes action and defines the camera based on the OS type.
 def os_action():
+    path = r"misc/camera/fix_camera.py"
+
+    while True:
+        subprocess.run(["python", path], shell=False)
+        break
+
     if platform.system() == "Linux":
-        while True:
-            subprocess.run(["python", "misc/camera/fix_camera.py"], shell=False)
-            break
-        set_camera.set_exposure()
+        set_camera.hoop_exposure()
         time.sleep(0.5)
         cap = cv2.VideoCapture(camera_index)
 
     else:
-        while True:
-            subprocess.call(["python", "misc/camera/fix_camera.py"], shell=False)
-            break
         cap = cv2.VideoCapture(camera_index)
         time.sleep(1)
         cap.set(cv2.CAP_PROP_AUTO_EXPOSURE, 0.25)
         cap.set(15, int(config.get("camera", "WINDOWS_HOOP_EXPOSURE")))
+    return cap
+
+
+# Sets the auto exposure.
+def set_auto_exposure(auto_exposure):
+    cap = cv2.VideoCapture(camera_index)
+    time.sleep(1)
+    cap.set(cv2.CAP_PROP_AUTO_EXPOSURE, auto_exposure)
+
+    return cap
+
+
+# Switch camera modes.
+def switch(mode):
+    if mode == "ball":
+        if platform.system() == "Linux":
+            set_camera.ball_exposure()
+            time.sleep(0.5)
+            cap = cv2.VideoCapture(camera_index)
+
+        else:
+            cap = set_auto_exposure(0.75)
+
+    elif mode == "hoop":
+        if platform.system() == "Linux":
+            set_camera.hoop_exposure()
+            time.sleep(0.5)
+            cap = cv2.VideoCapture(camera_index)
+
+        else:
+            cap = set_auto_exposure(0.25)
+            cap.set(15, int(config.get("camera", "WINDOWS_HOOP_EXPOSURE")))
+
     return cap
 
 
