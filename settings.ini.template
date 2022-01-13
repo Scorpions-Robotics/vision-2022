@@ -24,17 +24,13 @@ WORKING_DIR = /home/scorpions/repos/vision-2022/
 
 [calibration]
 ; In inches. Measure the real width of the hoop.
-HOOP_KNOWN_WIDTH = 43
+KNOWN_WIDTH = 43
 
-; In pixels. Measure the pixel width of the hoop. Run misc/calibration/pixel_calculator.py.
-HOOP_KNOWN_PIXEL_WIDTH = 231 
+; In inches. Measure the pixel width of the hoop. Run misc/calibration/pixel_calculator.py.
+KNOWN_PIXEL_WIDTH = 231 
 
 ; In inches. Measure the real distance from the hoop to the camera.
-HOOP_DISTANCE = 124
-
-BALL_KNOWN_WIDTH = 0
-BALL_KNOWN_PIXEL_WIDTH = 0
-BALL_DISTANCE = 0
+KNOWN_DISTANCE = 124
 
 
 [colors]

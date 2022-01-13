@@ -13,7 +13,7 @@ h = 0
 
 count = 0
 
-cascade_classifier = cv2.CascadeClassifier("hoop_classifier.xml")
+cascade_classifier = cv2.CascadeClassifier("cascade.xml")
 
 frame = cv2.imread("images/ref-pic.jpeg")
 
@@ -32,7 +32,7 @@ lineType = 2
 while True:
     try:
 
-        result, x, y, w, h = process.hoop_vision(frame, cascade_classifier)
+        result, x, y, w, h = process.vision(frame, cascade_classifier)
 
         if count == 0:
             print(f"X: {x} Y: {y} W: {w} H: {h}")
