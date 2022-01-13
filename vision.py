@@ -37,7 +37,6 @@ footage_socket.connect(f"tcp://{host_ip}:5555")
 
 flask_popen = flask_func.run_flask()
 
-count = 0
 
 try:
 
@@ -48,8 +47,8 @@ try:
 
             if grabbed == True:
 
-                if count == 1:
-                    camera.switch("ball")
+                mode = network.nt_get_mode()
+                camera.switch(mode)
 
                 frame = imutils.resize(
                     frame,
@@ -98,9 +97,6 @@ try:
                 if int(config.get("fancy_stuff", "STREAM_FRAME")):
                     encoded, buffer = cv2.imencode(".jpg", video.crosshair(frame))
                     footage_socket.send(buffer)
-
-                if count == 0:
-                    count += 1
 
             else:
                 try:

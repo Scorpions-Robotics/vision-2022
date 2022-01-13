@@ -32,3 +32,8 @@ def nt_init():
 def nt_listener_init():
     NetworkTables.initialize(server=nt_server)
     return NetworkTables.getTable(nt_table)
+
+
+def nt_get_mode():
+    table = NetworkTables.getTable(nt_table)
+    return table.getString("mode")
