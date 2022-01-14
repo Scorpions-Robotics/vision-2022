@@ -11,7 +11,6 @@ config = ConfigParser()
 config.read("settings.ini")
 
 camera_index = int(config.get("camera", "CAMERA_INDEX"))
-cap = cv2.VideoCapture(camera_index)
 
 count = 0
 
@@ -43,7 +42,6 @@ def get_dimensions(cap, x_y):
 
 # Takes action and defines the camera based on the OS type.
 def camera_init():
-    global cap
     path = r"misc/camera/fix_camera.py"
 
     while True:
@@ -64,7 +62,7 @@ def camera_init():
 
 
 # Sets the auto exposure.
-def set_auto_exposure(auto_exposure):
+def set_auto_exposure(cap, auto_exposure):
     time.sleep(1)
     cap.set(cv2.CAP_PROP_AUTO_EXPOSURE, auto_exposure)
 
@@ -79,7 +77,7 @@ def switch(original_cap, mode):
             set_camera.ball_exposure()
             time.sleep(0.5)
         else:
-            cap = set_auto_exposure(0.75)
+            cap = set_auto_exposure(original_cap, 0.75)
         count += 1
 
     elif mode == "hoop" and count == 1:
@@ -87,7 +85,7 @@ def switch(original_cap, mode):
             set_camera.hoop_exposure()
             time.sleep(0.5)
         else:
-            cap = set_auto_exposure(0.25)
+            cap = set_auto_exposure(original_cap, 0.25)
             cap.set(15, int(config.get("camera", "WINDOWS_HOOP_EXPOSURE")))
         count -= 1
 
