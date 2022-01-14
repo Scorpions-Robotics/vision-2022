@@ -14,6 +14,7 @@ camera_index = int(config.get("camera", "CAMERA_INDEX"))
 
 count = 0
 
+cap = cv2.VideoCapture(camera_index)
 
 # Resolution initialization.
 def resolution_init(frame):
@@ -42,6 +43,7 @@ def get_dimensions(cap, x_y):
 
 # Takes action and defines the camera based on the OS type.
 def camera_init():
+    global cap
     path = r"misc/camera/fix_camera.py"
 
     while True:
@@ -63,7 +65,6 @@ def camera_init():
 
 # Sets the auto exposure.
 def set_auto_exposure(auto_exposure):
-    cap = cv2.VideoCapture(camera_index)
     time.sleep(1)
     cap.set(cv2.CAP_PROP_AUTO_EXPOSURE, auto_exposure)
 
@@ -77,7 +78,7 @@ def switch(original_cap, mode):
         if platform.system() == "Linux":
             set_camera.ball_exposure()
             time.sleep(0.5)
-            cap = cv2.VideoCapture(camera_index)
+
 
         else:
             cap = set_auto_exposure(0.75)
@@ -87,7 +88,7 @@ def switch(original_cap, mode):
         if platform.system() == "Linux":
             set_camera.hoop_exposure()
             time.sleep(0.5)
-            cap = cv2.VideoCapture(camera_index)
+
 
         else:
             cap = set_auto_exposure(0.25)

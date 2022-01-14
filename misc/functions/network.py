@@ -74,7 +74,7 @@ def set_alliance_hsv_lower(alliance):
 
 # Assign tuples for hoop hsv values.
 def set_hoop_hsv():
-    tuple(map(int, config.get("colors", "HOOP_HSV_UPPER").split("\n"))), tuple(
+    return tuple(map(int, config.get("colors", "HOOP_HSV_UPPER").split("\n"))), tuple(
         map(int, config.get("colors", "HOOP_HSV_LOWER").split("\n"))
     )
 
