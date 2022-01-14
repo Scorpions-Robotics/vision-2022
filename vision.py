@@ -14,10 +14,6 @@ config.read("settings.ini")
 print(f"Starting vision-processing...\nTime (UTC): {datetime.utcnow()}")
 
 hoop_hsv_upper, hoop_hsv_lower = network.set_hoop_hsv()
-ball_hsv_upper, ball_hsv_lower = (
-    network.set_alliance_hsv_upper(),
-    network.set_alliance_hsv_lower(),
-)
 
 hoop_kpw = int(config.get("calibration", "HOOP_KNOWN_PIXEL_WIDTH"))
 hoop_kd = int(config.get("calibration", "HOOP_KNOWN_DISTANCE"))
@@ -49,6 +45,11 @@ try:
                 mode, alliance = network.nt_get_info(table)
                 cap = camera.switch(cap, mode)
                 frame = camera.resolution_init(frame)
+
+                ball_hsv_upper, ball_hsv_lower = (
+                    network.set_alliance_hsv_upper(alliance),
+                    network.set_alliance_hsv_lower(alliance),
+                )
 
                 if mode == "hoop":
                     frame = video.settings(frame)
