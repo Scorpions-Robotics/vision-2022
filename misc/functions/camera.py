@@ -11,10 +11,10 @@ config = ConfigParser()
 config.read("settings.ini")
 
 camera_index = int(config.get("camera", "CAMERA_INDEX"))
+cap = cv2.VideoCapture(camera_index)
 
 count = 0
 
-cap = cv2.VideoCapture(camera_index)
 
 # Resolution initialization.
 def resolution_init(frame):
@@ -78,8 +78,6 @@ def switch(original_cap, mode):
         if platform.system() == "Linux":
             set_camera.ball_exposure()
             time.sleep(0.5)
-
-
         else:
             cap = set_auto_exposure(0.75)
         count += 1
@@ -88,8 +86,6 @@ def switch(original_cap, mode):
         if platform.system() == "Linux":
             set_camera.hoop_exposure()
             time.sleep(0.5)
-
-
         else:
             cap = set_auto_exposure(0.25)
             cap.set(15, int(config.get("camera", "WINDOWS_HOOP_EXPOSURE")))
