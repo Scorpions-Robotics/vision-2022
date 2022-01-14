@@ -1,5 +1,6 @@
-from pathlib import Path
 import sys
+from pathlib import Path
+from pynput import keyboard
 
 sys.path.append(str(Path("..").absolute().parent))
 from misc.functions import network
@@ -8,14 +9,12 @@ from misc.functions import network
 table = network.nt_listener_init()
 
 
-from pynput import keyboard
-
 def on_press(key):
     if key == keyboard.Key.left:
         table.putString("alliance", "blue")
         table.putString("mode", "ball")
     elif key == keyboard.Key.right:
-        table.putString("alliance","red") 
+        table.putString("alliance", "red")
         table.putString("mode", "hoop")
 
 
