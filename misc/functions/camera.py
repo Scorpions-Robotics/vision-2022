@@ -14,7 +14,7 @@ camera_index = int(config.get("camera", "CAMERA_INDEX"))
 
 count = 0
 
-cap = cv2.VideoCapture(camera_index)
+cap = None
 
 # Resolution initialization.
 def resolution_init(frame):
