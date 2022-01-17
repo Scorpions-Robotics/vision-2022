@@ -7,6 +7,7 @@ from misc.functions import camera
 from misc.functions import video
 from misc.functions import process
 from misc.functions import flask_func
+from misc.functions import shortener
 
 functions.warm_up()
 
@@ -87,16 +88,9 @@ while True:
 
                 network.put(table, mode, x, y, w, h, d, r, b)
 
-            if config.getint("fancy", "SHOW_FRAME"):
-                cv2.imshow("Result", video.crosshair(result))
-                cv2.waitKey(1)
-
-            if config.getint("fancy", "PRINT_VALUES"):
-                print(f"X: {x} Y: {y} W: {w} H: {h} D: {d} R: {r} B: {b} Mode: {mode}")
-
-            if config.getint("fancy", "STREAM_FRAME"):
-                encoded, buffer = cv2.imencode(".jpg", video.crosshair(frame))
-                footage_socket.send(buffer)
+            shortener.fancies(
+                result, cv2, footage_socket, frame, mode, x, y, w, h, d, r, b
+            )
 
         else:
             try:

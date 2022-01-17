@@ -8,7 +8,6 @@ sys.path.append(str(Path("..").absolute().parent))
 sys.path.append(str(Path("..").absolute().parent))
 from misc.functions import network
 from misc.functions import process
-from misc.functions import camera
 
 
 hoop_hsv_upper, hoop_hsv_lower = network.set_hoop_hsv()
@@ -40,8 +39,8 @@ w_f = int(frame_width / 8)
 
 font = cv2.FONT_HERSHEY_SIMPLEX
 location = (w_f, h_f)
-fontScale = 1
-fontColor = (255, 255, 255)
+fontScale = 0.5
+fontColor = (0, 0, 255)
 thickness = 2
 lineType = 2
 

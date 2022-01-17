@@ -11,7 +11,6 @@ from misc.functions import camera
 from misc.functions import network
 from misc.functions import video
 from misc.functions import process
-from misc.functions import keyboard_func
 
 
 hoop_hsv_upper, hoop_hsv_lower = network.set_hoop_hsv()
@@ -47,8 +46,8 @@ r = 0
 mode = "hoop"
 alliance = "blue"
 
-
-def on_press(key):
+# Can't remove this for now :(
+def on_press(key):  # sourcery skip: extract-duplicate-method
     global alliance
     global number
     global cap
@@ -69,6 +68,7 @@ def on_press(key):
     elif key == keyboard.Key.left:
         alliance = "blue"
         print("Blue alliance")
+
     elif key == keyboard.Key.right:
         alliance = "red"
         print("Red alliance")
