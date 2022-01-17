@@ -1,6 +1,6 @@
 import cv2
-import time
 from datetime import datetime
+from misc import functions
 from configparser import ConfigParser
 from misc.functions import network
 from misc.functions import camera
@@ -8,7 +8,7 @@ from misc.functions import video
 from misc.functions import process
 from misc.functions import flask_func
 
-# time.sleep(10)
+functions.warm_up()
 
 config = ConfigParser()
 config.read("settings.ini")
