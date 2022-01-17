@@ -3,7 +3,7 @@ import numpy as np
 
 
 # Processes the frame, detects the cascade classifier and returns the frame with squares drawn on the detected object.
-def vision(frame, cascade_classifier):
+def vision(frame, cascade_classifier) -> tuple:
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     objects = cascade_classifier.detectMultiScale(
         gray, scaleFactor=1.1, minNeighbors=5, minSize=(20, 20)

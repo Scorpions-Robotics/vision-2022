@@ -10,7 +10,7 @@ from misc.camera import set_camera
 config = ConfigParser()
 config.read("settings.ini")
 
-camera_index = int(config.get("camera", "CAMERA_INDEX"))
+camera_index = config.getint("camera", "CAMERA_INDEX")
 
 count = 0
 
@@ -19,13 +19,13 @@ count = 0
 def resolution_init(frame):
     return imutils.resize(
         frame,
-        width=int(config.get("camera", "FRAME_WIDTH")),
-        height=int(config.get("camera", "FRAME_HEIGHT")),
+        width=config.getint("camera", "FRAME_WIDTH"),
+        height=config.getint("camera", "FRAME_HEIGHT"),
     )
 
 
 # Gets the dimensions of the camera.
-def get_dimensions(cap, x_y):
+def get_dimensions(cap, x_y) -> int:
     if x_y == "x":
         try:
             dim_x = cap.get(3)
@@ -41,7 +41,7 @@ def get_dimensions(cap, x_y):
 
 
 # Takes action and defines the camera based on the OS type.
-def camera_init():
+def camera_init() -> cv2.VideoCapture:
     path = r"misc/camera/fix_camera.py"
 
     while True:
@@ -57,12 +57,12 @@ def camera_init():
         cap = cv2.VideoCapture(camera_index)
         time.sleep(1)
         cap.set(cv2.CAP_PROP_AUTO_EXPOSURE, 0.25)
-        cap.set(15, int(config.get("camera", "WINDOWS_HOOP_EXPOSURE")))
+        cap.set(15, config.getint("camera", "WINDOWS_HOOP_EXPOSURE"))
     return cap
 
 
 # Sets the auto exposure.
-def set_auto_exposure(cap, auto_exposure):
+def set_auto_exposure(cap, auto_exposure) -> cv2.VideoCapture:
     time.sleep(1)
     cap.set(cv2.CAP_PROP_AUTO_EXPOSURE, auto_exposure)
 
@@ -70,7 +70,7 @@ def set_auto_exposure(cap, auto_exposure):
 
 
 # Switch camera modes. Mode should be "hoop" at first, or might crash.
-def switch(original_cap, mode):
+def switch(original_cap, mode) -> cv2.VideoCapture:
     global count
     if mode == "ball" and count == 0:
         if platform.system() == "Linux":
@@ -86,7 +86,7 @@ def switch(original_cap, mode):
             time.sleep(0.5)
         else:
             cap = set_auto_exposure(original_cap, 0.25)
-            cap.set(15, int(config.get("camera", "WINDOWS_HOOP_EXPOSURE")))
+            cap.set(15, config.getint("camera", "WINDOWS_HOOP_EXPOSURE"))
         count -= 1
 
     try:
@@ -108,3 +108,23 @@ def white_balance(frame):
     )
     result = cv2.cvtColor(result, cv2.COLOR_LAB2BGR)
     return result
+
+
+# Make sure flask_popen and cap is closed properly.
+def stop(opencv_instance, cap=None, flask_popen=None):
+    while True:
+        try:
+            opencv_instance.destroyAllWindows()
+            cap.release()
+            flask_popen.kill()
+
+        except KeyboardInterrupt:
+            print("Wait for flask and cap to close...")
+            continue
+
+        except (AttributeError, NameError):
+            pass
+
+        else:
+            print("All stopped.")
+        break

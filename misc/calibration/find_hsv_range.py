@@ -1,17 +1,22 @@
 import cv2
 import numpy as np
 import sys
+from configparser import ConfigParser
 from pathlib import Path
 
 sys.path.append(str(Path("..").absolute().parent))
 from misc.functions import camera
 
 
+config = ConfigParser()
+config.read("settings.ini")
+
+
 def nothing(x):
     pass
 
 
-cap = camera.camera_init()
+cap = cv2.VideoCapture(config.getint("camera", "CAMERA_INDEX"))
 
 cv2.namedWindow("Trackbars")
 

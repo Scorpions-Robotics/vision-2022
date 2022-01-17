@@ -12,11 +12,11 @@ config = ConfigParser()
 config.read("settings.ini")
 
 
-frame_width = int(config.get("camera", "FRAME_WIDTH"))
-frame_height = int(config.get("camera", "FRAME_HEIGHT"))
+frame_width = config.getint("camera", "FRAME_WIDTH")
+frame_height = config.getint("camera", "FRAME_HEIGHT")
 
 # Calculates the distance between the crosshair and the hoop's center.
-def rotation(x_defined, x, w):
+def rotation(x_defined, x, w) -> float or None:
     try:
         x_c = x + (w / 2)
         return x_c - (x_defined / 2)
@@ -25,12 +25,12 @@ def rotation(x_defined, x, w):
 
 
 # Calculates the focal length.
-def focal_length(kpw, kd, kw):
+def focal_length(kpw, kd, kw) -> float:
     return (kpw * kd) / kw
 
 
 # Calculates the distance between camera and the hoop.
-def current_distance(kpw, kd, kw, w):
+def current_distance(kpw, kd, kw, w) -> float:
     try:
         return (kw * focal_length(kpw, kd, kw)) / w
     except Exception:
@@ -38,12 +38,12 @@ def current_distance(kpw, kd, kw, w):
 
 
 # Checks if the hoop is in the frame.
-def is_detected(key):
+def is_detected(key) -> bool:
     return key is not None
 
 
 # Safely rounds input to 2 decimal places.
-def safe_round(input):
+def safe_round(input) -> float:
     try:
         return round(input, 2)
     except Exception:
@@ -55,16 +55,16 @@ def settings(frame, resolution_rate: int or float = 1):
 
     frame = imutils.resize(
         frame,
-        width=int(config.get("camera", "FRAME_WIDTH")) * resolution_rate,
-        height=int(config.get("camera", "FRAME_HEIGHT")) * resolution_rate,
+        width=config.getint("camera", "FRAME_WIDTH") * resolution_rate,
+        height=config.getint("camera", "FRAME_HEIGHT") * resolution_rate,
     )
 
-    if int(config.get("fancy", "FLIP_FRAME")):
+    if config.getint("fancy", "FLIP_FRAME"):
         frame = cv2.flip(frame, 1)
 
-    frame = imutils.rotate(frame, int(config.get("fancy", "FRAME_ANGLE")))
+    frame = imutils.rotate(frame, config.getint("fancy", "FRAME_ANGLE"))
 
-    if int(config.get("fancy", "WHITE_BALANCE")):
+    if config.getint("fancy", "WHITE_BALANCE"):
         frame = camera.white_balance(frame)
 
     return frame
