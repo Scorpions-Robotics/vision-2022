@@ -45,8 +45,7 @@ thickness = 2
 lineType = 2
 
 hoop_classifier = cv2.CascadeClassifier("hoop_classifier.xml")
-# TODO: Add ball classifier.
-# ball_classifier = cv2.CascadeClassifier("ball_classifier.xml")
+ball_classifier = cv2.CascadeClassifier("ball_classifier.xml")
 
 for index, image in enumerate(hoop_images):
     result, x, y, w, h = process.vision(cv2.imread(image), hoop_classifier)
@@ -69,9 +68,7 @@ print("Processed hoop images are written under images/processed/hoop/ folder.")
 
 
 for index, image in enumerate(blue_ball_images):
-    result, x, y, w, h = process.vision(
-        cv2.imread(image), hoop_classifier
-    )  # TODO: Add ball classifier.
+    result, x, y, w, h = process.vision(cv2.imread(image), ball_classifier)
 
     cv2.putText(
         result,
@@ -93,9 +90,7 @@ print("Processed blue ball images are written under images/processed/b_ball/ fol
 
 
 for index, image in enumerate(red_ball_images):
-    result, x, y, w, h = process.vision(
-        cv2.imread(image), hoop_classifier
-    )  # TODO: Add ball classifier.
+    result, x, y, w, h = process.vision(cv2.imread(image), ball_classifier)
 
     cv2.putText(
         result,

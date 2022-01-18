@@ -30,8 +30,7 @@ table = network.nt_init()
 cap = camera.camera_init()
 
 hoop_classifier = cv2.CascadeClassifier("hoop_classifier.xml")
-# TODO: Add ball classifier.
-# ball_classifier = cv2.CascadeClassifier("ball_classifier.xml")
+ball_classifier = cv2.CascadeClassifier("ball_classifier.xml")
 
 footage_socket = network.zmq_init()
 flask_popen = flask_func.run_flask()
@@ -73,9 +72,7 @@ while True:
                 frame = video.settings(frame, resolution_rate)
 
                 hsv_mask = process.mask_color(frame, (ball_hsv_lower), (ball_hsv_upper))
-                result, x, y, w, h = process.vision(
-                    hsv_mask, hoop_classifier
-                )  # TODO: Rename hoop_classifier to ball_classifier after it is defined.
+                result, x, y, w, h = process.vision(hsv_mask, ball_classifier)
 
                 d = video.current_distance(ball_kpw, ball_kd, ball_kw, w)
                 r = video.rotation(
@@ -89,7 +86,7 @@ while True:
                 network.put(table, mode, x, y, w, h, d, r, b)
 
             shortener.fancies(
-                result, cv2, footage_socket, frame, mode, x, y, w, h, d, r, b
+                result, cv2, footage_socket, result, mode, x, y, w, h, d, r, b
             )
 
         else:

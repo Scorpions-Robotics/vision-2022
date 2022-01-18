@@ -11,10 +11,10 @@ table = network.nt_listener_init()
 
 def on_press(key):
     if key == keyboard.Key.left:
-        table.putString("alliance", "blue")
+        table.putString("alliance", "red")
         table.putString("mode", "ball")
     elif key == keyboard.Key.right:
-        table.putString("alliance", "red")
+        table.putString("alliance", "blue")
         table.putString("mode", "hoop")
 
 
