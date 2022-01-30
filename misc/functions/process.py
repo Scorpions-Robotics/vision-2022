@@ -1,18 +1,26 @@
 import cv2
 import numpy as np
+from configparser import ConfigParser
+
+
+config = ConfigParser()
+config.read("settings.ini")
 
 
 # Processes the frame, detects the cascade classifier and returns the frame with squares drawn on the detected object.
-def vision(frame, cascade_classifier):
+def vision(frame, cascade_classifier) -> tuple:
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    hoops = cascade_classifier.detectMultiScale(
-        gray, scaleFactor=1.1, minNeighbors=5, minSize=(20, 20)
+    objects = cascade_classifier.detectMultiScale(
+        gray,
+        scaleFactor=1.05,
+        minNeighbors=config.getint("cascade", "MIN_NEIGHBORS"),
+        minSize=tuple(map(int, config.get("cascade", "MIN_SIZE").split("\n"))),
     )
 
-    for (x, y, w, h) in hoops:
+    for (x, y, w, h) in objects:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
-    if not len(hoops):
+    if not len(objects):
         x, y, w, h = "none", "none", "none", "none"
 
     return frame, x, y, w, h

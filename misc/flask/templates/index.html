@@ -1,11 +1,28 @@
 <head>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .imgbox {
+            display: grid;
+            height: 100%;
+        }
+
+        .center-fit {
+            max-width: 100%;
+            max-height: 100vh;
+            margin: auto;
+        }
+    </style>
 </head>
+
 <body>
     <div class="container">
         <div class="row">
             <div class="col-lg-8  offset-lg-2 imgbox">
-                <img class="center-fit"  src="{{ url_for('video_feed') }}" height="100%" width="auto">
+                <img class="center-fit" src="{{ url_for('video_feed') }}" height="100%" width="auto">
             </div>
         </div>
     </div>

@@ -1,123 +1,101 @@
 import cv2
-import imutils
-import zmq
-import socket
 from datetime import datetime
+from misc import functions
 from configparser import ConfigParser
 from misc.functions import network
 from misc.functions import camera
 from misc.functions import video
 from misc.functions import process
 from misc.functions import flask_func
+from misc.functions import shortener
 
+functions.warm_up()
 
 config = ConfigParser()
 config.read("settings.ini")
 
 print(f"Starting vision-processing...\nTime (UTC): {datetime.utcnow()}")
 
-hoop_hsv_upper = tuple(map(int, config.get("colors", "HOOP_HSV_UPPER").split("\n")))
-hoop_hsv_lower = tuple(map(int, config.get("colors", "HOOP_HSV_LOWER").split("\n")))
+hoop_hsv_upper, hoop_hsv_lower = network.set_hoop_hsv()
 
-kpw = int(config.get("calibration", "KNOWN_PIXEL_WIDTH"))
-kd = int(config.get("calibration", "KNOWN_DISTANCE"))
-kw = int(config.get("calibration", "KNOWN_WIDTH"))
+hoop_kpw = config.getint("calibration", "HOOP_KNOWN_PIXEL_WIDTH")
+hoop_kd = config.getint("calibration", "HOOP_KNOWN_DISTANCE")
+hoop_kw = config.getint("calibration", "HOOP_KNOWN_WIDTH")
+
+ball_kpw = config.getint("calibration", "BALL_KNOWN_PIXEL_WIDTH")
+ball_kd = config.getint("calibration", "BALL_KNOWN_DISTANCE")
+ball_kw = config.getint("calibration", "BALL_KNOWN_WIDTH")
 
 table = network.nt_init()
+cap = camera.camera_init()
 
-cap = camera.os_action()
+hoop_classifier = cv2.CascadeClassifier("hoop_classifier.xml")
+ball_classifier = cv2.CascadeClassifier("ball_classifier.xml")
 
-cascade_classifier = cv2.CascadeClassifier("cascade.xml")
-
-hostname = socket.gethostname()
-host_ip = socket.gethostbyname(hostname)
-context = zmq.Context()
-footage_socket = context.socket(zmq.PUB)
-footage_socket.connect(f"tcp://{host_ip}:5555")
-
+footage_socket = network.zmq_init()
 flask_popen = flask_func.run_flask()
 
 
-try:
+while True:
+    try:
 
-    while True:
-        try:
+        grabbed, frame = cap.read()
+        mode, alliance = network.nt_get_info(table)
+        cap = camera.switch(cap, mode)
 
-            grabbed, frame = cap.read()
+        if grabbed:
 
-            if grabbed == True:
+            frame = camera.resolution_init(frame)
 
-                frame = imutils.resize(
-                    frame,
-                    width=int(config.get("camera", "FRAME_WIDTH")),
-                    height=int(config.get("camera", "FRAME_HEIGHT")),
-                )
+            ball_hsv_upper, ball_hsv_lower = (
+                network.set_alliance_hsv_upper(alliance),
+                network.set_alliance_hsv_lower(alliance),
+            )
 
-                if int(config.get("fancy_stuff", "FLIP_FRAME")):
-                    frame = cv2.flip(frame, 1)
-
-                frame = imutils.rotate(
-                    frame, int(config.get("fancy_stuff", "FRAME_ANGLE"))
-                )
-
-                if int(config.get("fancy_stuff", "WHITE_BALANCE")):
-                    frame = camera.white_balance(frame)
+            if mode == "hoop":
+                frame = video.settings(frame)
 
                 hsv_mask = process.mask_color(frame, (hoop_hsv_lower), (hoop_hsv_upper))
-                result, x, y, w, h = process.vision(hsv_mask, cascade_classifier)
+                result, x, y, w, h = process.vision(hsv_mask, hoop_classifier)
 
-                d = video.current_distance(kpw, kd, kw, w)
-                r = video.rotation(int(config.get("camera", "FRAME_WIDTH")), x, w)
+                d = video.current_distance(hoop_kpw, hoop_kd, hoop_kw, w)
+                r = video.rotation(config.getint("camera", "FRAME_WIDTH"), x, w)
                 b = int(video.is_detected(d))
 
-                try:
-                    d = round(d, 2)
-                    r = round(r, 2)
-                except Exception:
-                    pass
+                d = video.safe_round(d)
+                r = video.safe_round(r)
 
-                table.putString("X", x)
-                table.putString("Y", y)
-                table.putString("W", w)
-                table.putString("H", h)
-                table.putString("D", d)
-                table.putString("R", r)
-                table.putString("B", b)
+                network.put(table, mode, x, y, w, h, d, r, b)
 
-                if int(config.get("fancy_stuff", "PRINT_VALUES")):
-                    print(f"X: {x} Y: {y} W: {w} H: {h} D: {d} R: {r} B: {b}")
+            elif mode == "ball":
+                resolution_rate = 1
+                frame = video.settings(frame, resolution_rate)
 
-                if int(config.get("fancy_stuff", "SHOW_FRAME")):
-                    cv2.imshow("Result", video.crosshair(result))
-                    cv2.waitKey(1)
+                hsv_mask = process.mask_color(frame, (ball_hsv_lower), (ball_hsv_upper))
+                result, x, y, w, h = process.vision(hsv_mask, ball_classifier)
 
-                if int(config.get("fancy_stuff", "STREAM_FRAME")):
-                    encoded, buffer = cv2.imencode(".jpg", video.crosshair(frame))
-                    footage_socket.send(buffer)
+                d = video.current_distance(ball_kpw, ball_kd, ball_kw, w)
+                r = video.rotation(
+                    config.getint("camera", "FRAME_WIDTH") * resolution_rate, x, w
+                )
+                b = int(video.is_detected(d))
 
-            else:
-                try:
-                    cap = camera.os_action()
-                except Exception:
-                    pass
+                d = video.safe_round(d)
+                r = video.safe_round(r)
 
-        except KeyboardInterrupt:
-            break
+                network.put(table, mode, x, y, w, h, d, r, b)
 
-    try:
-        flask_popen.kill()
-    except AttributeError:
-        pass
+            shortener.fancies(
+                result, cv2, footage_socket, result, mode, x, y, w, h, d, r, b
+            )
 
-    cap.release()
-    cv2.destroyAllWindows()
+        else:
+            try:
+                cap = camera.camera_init()
+            except Exception:
+                pass
 
-except Exception as e:
-    print(e)
+    except (Exception, KeyboardInterrupt):
+        break
 
-    try:
-        flask_popen.kill()
-        cap.release()
-        cv2.destroyAllWindows()
-    except AttributeError:
-        pass
+camera.stop(cv2, cap, flask_popen)

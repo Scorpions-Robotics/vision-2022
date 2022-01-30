@@ -21,7 +21,7 @@ def gen_frames():
         source = footage_socket.recv()
         npimg = np.frombuffer(source, dtype=np.uint8)
         stream = cv2.imdecode(npimg, 1)
-        ret, buffer = cv2.imencode(".jpg", stream)
+        buffer = cv2.imencode(".jpg", stream)[1]
         frame = buffer.tobytes()
         yield (b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n")
 
@@ -37,4 +37,4 @@ def video_feed():
 
 
 if __name__ == "__main__":
-    app.run(host=config.get("network", "JETSON_IP"))
+    app.run(host=config.get("network", "FLASK_SERVER"))

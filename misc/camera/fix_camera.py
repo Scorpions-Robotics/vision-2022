@@ -8,7 +8,7 @@ from configparser import ConfigParser
 config = ConfigParser()
 config.read("settings.ini")
 
-camera_index = int(config.get("camera", "CAMERA_INDEX"))
+camera_index = config.getint("camera", "CAMERA_INDEX")
 
 if platform.system() == "Linux":
     set_camera.set_format()

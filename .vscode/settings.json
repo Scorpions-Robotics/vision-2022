@@ -1,5 +1,5 @@
 {
-    "python.defaultInterpreterPath": "python",
+    "python.defaultInterpreterPath": "~/miniconda3/envs/vision/python.exe",
     "python.formatting.provider": "black",
     "editor.formatOnSave": true
 }

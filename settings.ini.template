@@ -3,8 +3,8 @@
 
 
 [network]
-; Jetson's IP address.
-JETSON_IP = 10.76.72.10
+; Flask server's IP address.
+FLASK_SERVER = 10.76.72.10
 
 ; Set to 1 if you are not using roboRIO as the server.
 NETWORKTABLES_SERVER_MODE = 1
@@ -18,20 +18,42 @@ NETWORKTABLES_TABLE = vision
 
 
 [system]
+; Set to 1 if you want the script to wait for Jetson to warm up before starting. Default is 1.
+WAIT_FOR_JETSON = 1
+
 ; Working directory, aka where this file is located. Don't forget the trailing slash.
 WORKING_DIR = /home/scorpions/repos/vision-2022/
 
 
 [calibration]
 ; In inches. Measure the real width of the hoop.
-KNOWN_WIDTH = 43
+HOOP_KNOWN_WIDTH = 43
 
-; In inches. Measure the pixel width of the hoop. Run misc/calibration/pixel_calculator.py.
-KNOWN_PIXEL_WIDTH = 231 
+; In pixels. Measure the pixel width of the hoop. Run misc/calibration/pixel_calculator.py.
+HOOP_KNOWN_PIXEL_WIDTH = 231
 
 ; In inches. Measure the real distance from the hoop to the camera.
-KNOWN_DISTANCE = 124
+HOOP_KNOWN_DISTANCE = 124
 
+; In inches. Measure the real width of the ball.
+BALL_KNOWN_WIDTH = 43
+
+; In pixels. Measure the pixel width of the ball. Run misc/calibration/pixel_calculator.py.
+BALL_KNOWN_PIXEL_WIDTH = 231
+
+; In inches. Measure the real distance from the ball to the camera.
+BALL_KNOWN_DISTANCE = 124
+
+
+[cascade]
+; Cascade classifier settings.
+
+; Set between 2 and 6. Higher is more accurate but slower. Default is 3. This should be an integer.
+MIN_NEIGHBORS = 3
+
+; Minimum size of a detected object. Default is 15x15. This should be a tuple.
+MIN_SIZE = 15
+        15
 
 [colors]
 ; Set upper and lower HSV values for the requested color.
@@ -53,10 +75,10 @@ RED_BALL_HSV_UPPER = 10
                     255
 
 ; tuple(map(int, config.get("colors", "BLUE_BALL_HSV_{UPPER|LOWER}").split("\n")))
-BLUE_BALL_HSV_LOWER = 170
-                    60
-                    60
-BLUE_BALL_HSV_UPPER = 180
+BLUE_BALL_HSV_LOWER = 100
+                    70
+                    70
+BLUE_BALL_HSV_UPPER = 125
                     255
                     255
 
@@ -76,8 +98,8 @@ FRAME_WIDTH = 320
 FRAME_HEIGHT = 240
 
 
-[fancy_stuff]
-; Flip frame or not. Gets values 0 or 1. Default is 1.
+[fancy]
+; Flip frame or not. Gets values 0 or 1. Default is 0.
 FLIP_FRAME = 0
 
 ; Frame angle. Gets only integer values. Default is 0.
@@ -86,11 +108,11 @@ FRAME_ANGLE = 0
 ; White balance. Gets values 0 or 1. Default is 1.
 WHITE_BALANCE = 1
 
-; Decide if frame is shown or not. Gets values 0 or 1. Default is 0. Use 0 while connecting via ssh.
+; If frame is shown or not. Gets values 0 or 1. Default is 0. Use 0 while running on Jetson.
 SHOW_FRAME = 0
 
-; Decide if the frame is streamed or not. Gets values 0 or 1. Default is 1.
+; If the frame is streamed or not. Gets values 0 or 1. Default is 1.
 STREAM_FRAME = 1
 
-; Decide if the values are printed or not. Gets values 0 or 1. Default is 1.
+; If the values are printed or not. Gets values 0 or 1. Default is 1.
 PRINT_VALUES = 1
