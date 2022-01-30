@@ -19,4 +19,5 @@ def fancies(result, cv2, footage_socket, frame, mode, x, y, w, h, d, r, b):
 
     if config.getint("fancy", "STREAM_FRAME"):
         encoded, buffer = cv2.imencode(".jpg", video.crosshair(frame))
-        footage_socket.send(buffer)
+        if encoded:
+            footage_socket.send(buffer)

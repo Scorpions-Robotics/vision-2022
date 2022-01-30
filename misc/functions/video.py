@@ -15,6 +15,7 @@ config.read("settings.ini")
 frame_width = config.getint("camera", "FRAME_WIDTH")
 frame_height = config.getint("camera", "FRAME_HEIGHT")
 
+
 # Calculates the distance between the crosshair and the hoop's center.
 def rotation(x_defined, x, w) -> float or None:
     try:
@@ -43,11 +44,11 @@ def is_detected(key) -> bool:
 
 
 # Safely rounds input to 2 decimal places.
-def safe_round(input) -> float:
+def safe_round(key) -> float:
     try:
-        return round(input, 2)
+        return round(key, 2)
     except Exception:
-        return input
+        return key
 
 
 # Video settings.

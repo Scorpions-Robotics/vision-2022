@@ -46,6 +46,7 @@ r = 0
 mode = "hoop"
 alliance = "blue"
 
+
 # Can't remove this for now :(
 def on_press(key):  # sourcery skip: extract-duplicate-method
     global alliance
