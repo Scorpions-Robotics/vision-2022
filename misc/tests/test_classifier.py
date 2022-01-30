@@ -1,4 +1,3 @@
-from re import L
 import cv2
 import sys
 from pathlib import Path
