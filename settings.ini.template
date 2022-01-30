@@ -45,6 +45,16 @@ BALL_KNOWN_PIXEL_WIDTH = 231
 BALL_KNOWN_DISTANCE = 124
 
 
+[cascade]
+; Cascade classifier settings.
+
+; Set between 2 and 6. Higher is more accurate but slower. Default is 3. This should be an integer.
+MIN_NEIGHBORS = 3
+
+; Minimum size of a detected object. Default is 15x15. This should be a tuple.
+MIN_SIZE = 15
+        15
+
 [colors]
 ; Set upper and lower HSV values for the requested color.
 
@@ -65,10 +75,10 @@ RED_BALL_HSV_UPPER = 10
                     255
 
 ; tuple(map(int, config.get("colors", "BLUE_BALL_HSV_{UPPER|LOWER}").split("\n")))
-BLUE_BALL_HSV_LOWER = 170
-                    60
-                    60
-BLUE_BALL_HSV_UPPER = 180
+BLUE_BALL_HSV_LOWER = 100
+                    70
+                    70
+BLUE_BALL_HSV_UPPER = 125
                     255
                     255
 
@@ -89,7 +99,7 @@ FRAME_HEIGHT = 240
 
 
 [fancy]
-; Flip frame or not. Gets values 0 or 1. Default is 1.
+; Flip frame or not. Gets values 0 or 1. Default is 0.
 FLIP_FRAME = 0
 
 ; Frame angle. Gets only integer values. Default is 0.
@@ -98,11 +108,11 @@ FRAME_ANGLE = 0
 ; White balance. Gets values 0 or 1. Default is 1.
 WHITE_BALANCE = 1
 
-; Decide if frame is shown or not. Gets values 0 or 1. Default is 0. Use 0 while connecting via ssh.
+; If frame is shown or not. Gets values 0 or 1. Default is 0. Use 0 while running on Jetson.
 SHOW_FRAME = 0
 
-; Decide if the frame is streamed or not. Gets values 0 or 1. Default is 1.
+; If the frame is streamed or not. Gets values 0 or 1. Default is 1.
 STREAM_FRAME = 1
 
-; Decide if the values are printed or not. Gets values 0 or 1. Default is 1.
+; If the values are printed or not. Gets values 0 or 1. Default is 1.
 PRINT_VALUES = 1

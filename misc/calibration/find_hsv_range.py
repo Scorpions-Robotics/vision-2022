@@ -30,7 +30,7 @@ cv2.createTrackbar("U - V", "Trackbars", 255, 255, nothing)
 
 while True:
 
-    ret, frame = camera.read()
+    ret, frame = cap.read()
     if not ret:
         break
 

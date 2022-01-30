@@ -59,7 +59,7 @@ while True:
                 result, x, y, w, h = process.vision(hsv_mask, hoop_classifier)
 
                 d = video.current_distance(hoop_kpw, hoop_kd, hoop_kw, w)
-                r = video.rotation(config.get("camera", "FRAME_WIDTH"), x, w)
+                r = video.rotation(config.getint("camera", "FRAME_WIDTH"), x, w)
                 b = int(video.is_detected(d))
 
                 d = video.safe_round(d)
