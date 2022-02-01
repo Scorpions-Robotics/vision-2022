@@ -5,6 +5,7 @@ from configparser import ConfigParser
 sys.path.append(str(Path("..").absolute().parent))
 from misc.functions import video
 
+
 config = ConfigParser()
 config.read("settings.ini")
 

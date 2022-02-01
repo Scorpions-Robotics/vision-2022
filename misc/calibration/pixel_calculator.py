@@ -5,9 +5,8 @@ from configparser import ConfigParser
 from pathlib import Path
 
 sys.path.append(str(Path("..").absolute().parent))
-sys.path.append(str(Path("..").absolute().parent))
-from misc.functions import network
 from misc.functions import process
+from misc.functions import network
 
 
 hoop_hsv_upper, hoop_hsv_lower = network.set_hoop_hsv()
@@ -21,7 +20,10 @@ blue_ball_hsv_upper, blue_ball_hsv_lower = network.set_alliance_hsv_upper(
 config = ConfigParser()
 config.read("settings.ini")
 
-func_replace = lambda x: x.replace("\\", "/")
+
+def func_replace(x):
+    return x.replace("\\", "/")
+
 
 hoop_images = list(map(func_replace, glob("images/raw/hoop/hoop-ref-pic-raw-*.jpeg")))
 blue_ball_images = list(
