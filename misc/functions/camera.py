@@ -11,7 +11,6 @@ config = ConfigParser()
 config.read("settings.ini")
 
 camera_index = config.getint("camera", "CAMERA_INDEX")
-
 count = 0
 
 

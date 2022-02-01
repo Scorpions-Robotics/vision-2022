@@ -1,5 +1,3 @@
-from misc.functions import process
-from misc.functions import network
 import cv2
 import sys
 from glob import glob
@@ -7,7 +5,8 @@ from configparser import ConfigParser
 from pathlib import Path
 
 sys.path.append(str(Path("..").absolute().parent))
-sys.path.append(str(Path("..").absolute().parent))
+from misc.functions import process
+from misc.functions import network
 
 
 hoop_hsv_upper, hoop_hsv_lower = network.set_hoop_hsv()

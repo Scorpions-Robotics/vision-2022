@@ -1,9 +1,9 @@
-from misc.functions import network
 import sys
 from pathlib import Path
 from pynput import keyboard
 
 sys.path.append(str(Path("..").absolute().parent))
+from misc.functions import network
 
 
 table = network.nt_listener_init()

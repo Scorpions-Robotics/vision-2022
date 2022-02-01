@@ -1,7 +1,3 @@
-from misc.functions import process
-from misc.functions import video
-from misc.functions import network
-from misc.functions import camera
 import cv2
 import sys
 import time
@@ -11,6 +7,10 @@ from pathlib import Path
 from configparser import ConfigParser
 
 sys.path.append(str(Path("..").absolute().parent))
+from misc.functions import process
+from misc.functions import video
+from misc.functions import network
+from misc.functions import camera
 
 
 hoop_hsv_upper, hoop_hsv_lower = network.set_hoop_hsv()
