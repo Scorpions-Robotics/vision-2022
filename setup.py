@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 import platform
 import argparse
@@ -10,7 +11,7 @@ config = ConfigParser()
 config.read("settings.ini")
 
 if platform.system() != "Linux":
-    exit("error: This can only run on Linux.")
+    sys.exit("error: This can only run on Linux.")
 
 try:
 
