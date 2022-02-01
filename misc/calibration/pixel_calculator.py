@@ -26,8 +26,7 @@ def func_replace(x):
     return x.replace("\\", "/")
 
 
-hoop_images = list(map(func_replace, glob(
-    "images/raw/hoop/hoop-ref-pic-raw-*.jpeg")))
+hoop_images = list(map(func_replace, glob("images/raw/hoop/hoop-ref-pic-raw-*.jpeg")))
 blue_ball_images = list(
     map(func_replace, glob("images/raw/b_ball/blue_ball-ref-pic-raw-*.jpeg"))
 )
@@ -66,8 +65,7 @@ for index, image in enumerate(hoop_images):
     )
 
     print(image, f"X: {x} Y: {y} W: {w} H: {h}")
-    cv2.imwrite(
-        f"images/processed/hoop/hoop-ref-pic-processed-{index}.jpeg", result)
+    cv2.imwrite(f"images/processed/hoop/hoop-ref-pic-processed-{index}.jpeg", result)
 
 print("Processed hoop images are written under images/processed/hoop/ folder.")
 

@@ -117,8 +117,7 @@ while True:
 
             elif mode == "hoop":
                 frame = video.settings(frame)
-                hsv_mask = process.mask_color(
-                    frame, (hoop_hsv_lower), (hoop_hsv_upper))
+                hsv_mask = process.mask_color(frame, (hoop_hsv_lower), (hoop_hsv_upper))
 
             cv2.imshow("img", hsv_mask)
 
