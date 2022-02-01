@@ -39,7 +39,8 @@ try:
             break
     else:
         print(
-            "Internet is not connected. Skipping dependency installations. This may cause problems."
+            "Internet is not connected. Skipping dependency installations. \
+            This may cause problems."
         )
 
     while True:
