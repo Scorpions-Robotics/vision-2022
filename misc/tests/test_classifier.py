@@ -1,11 +1,11 @@
+from misc.functions import process
+from misc.functions import video
+from misc.functions import camera
 import cv2
 import sys
 from pathlib import Path
 
 sys.path.append(str(Path("..").absolute().parent))
-from misc.functions import camera
-from misc.functions import video
-from misc.functions import process
 
 cap = camera.camera_init()
 

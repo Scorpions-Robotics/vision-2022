@@ -1,3 +1,4 @@
+from misc.functions import camera
 import cv2
 import sys
 import imutils
@@ -5,7 +6,6 @@ from pathlib import Path
 from configparser import ConfigParser
 
 sys.path.append(str(Path("..").absolute().parent))
-from misc.functions import camera
 
 
 config = ConfigParser()

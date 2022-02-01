@@ -1,3 +1,7 @@
+from misc.functions import process
+from misc.functions import video
+from misc.functions import network
+from misc.functions import camera
 import cv2
 import sys
 import time
@@ -7,10 +11,6 @@ from pathlib import Path
 from configparser import ConfigParser
 
 sys.path.append(str(Path("..").absolute().parent))
-from misc.functions import camera
-from misc.functions import network
-from misc.functions import video
-from misc.functions import process
 
 
 hoop_hsv_upper, hoop_hsv_lower = network.set_hoop_hsv()
@@ -27,7 +27,10 @@ config.read("settings.ini")
 table = network.nt_init()
 cap = camera.camera_init()
 
-func_replace = lambda x: x.replace("\\", "/")
+
+def func_replace(x):
+    return x.replace("\\", "/")
+
 
 hoop_images = (
     len(list(map(func_replace, glob("images/raw/hoop-ref-pic-raw-*.jpeg")))) + 1
@@ -114,7 +117,8 @@ while True:
 
             elif mode == "hoop":
                 frame = video.settings(frame)
-                hsv_mask = process.mask_color(frame, (hoop_hsv_lower), (hoop_hsv_upper))
+                hsv_mask = process.mask_color(
+                    frame, (hoop_hsv_lower), (hoop_hsv_upper))
 
             cv2.imshow("img", hsv_mask)
 

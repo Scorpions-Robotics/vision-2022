@@ -79,7 +79,8 @@ try:
 
     while True:
         subprocess.run(
-            ["sudo", "touch", f"/lib/systemd/system/{args.service_name}.service"],
+            ["sudo", "touch",
+                f"/lib/systemd/system/{args.service_name}.service"],
             shell=False,
         )
         break

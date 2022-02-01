@@ -1,3 +1,5 @@
+from misc.functions import process
+from misc.functions import network
 import cv2
 import sys
 from glob import glob
@@ -6,8 +8,6 @@ from pathlib import Path
 
 sys.path.append(str(Path("..").absolute().parent))
 sys.path.append(str(Path("..").absolute().parent))
-from misc.functions import network
-from misc.functions import process
 
 
 hoop_hsv_upper, hoop_hsv_lower = network.set_hoop_hsv()
@@ -21,9 +21,13 @@ blue_ball_hsv_upper, blue_ball_hsv_lower = network.set_alliance_hsv_upper(
 config = ConfigParser()
 config.read("settings.ini")
 
-func_replace = lambda x: x.replace("\\", "/")
 
-hoop_images = list(map(func_replace, glob("images/raw/hoop/hoop-ref-pic-raw-*.jpeg")))
+def func_replace(x):
+    return x.replace("\\", "/")
+
+
+hoop_images = list(map(func_replace, glob(
+    "images/raw/hoop/hoop-ref-pic-raw-*.jpeg")))
 blue_ball_images = list(
     map(func_replace, glob("images/raw/b_ball/blue_ball-ref-pic-raw-*.jpeg"))
 )
@@ -62,7 +66,8 @@ for index, image in enumerate(hoop_images):
     )
 
     print(image, f"X: {x} Y: {y} W: {w} H: {h}")
-    cv2.imwrite(f"images/processed/hoop/hoop-ref-pic-processed-{index}.jpeg", result)
+    cv2.imwrite(
+        f"images/processed/hoop/hoop-ref-pic-processed-{index}.jpeg", result)
 
 print("Processed hoop images are written under images/processed/hoop/ folder.")
 
