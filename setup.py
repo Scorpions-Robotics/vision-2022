@@ -34,7 +34,8 @@ try:
                     "requirements.txt",
                 ],
                 shell=False,
-            check=True)
+                check=True,
+            )
             break
     else:
         print(
@@ -81,7 +82,8 @@ try:
         subprocess.run(
             ["sudo", "touch", f"/lib/systemd/system/{args.service_name}.service"],
             shell=False,
-        check=True)
+            check=True,
+        )
         break
 
     service = f"""[Unit]
@@ -104,16 +106,20 @@ WantedBy=multi-user.target"""
 
     while True:
         subprocess.run(
-            ["sudo", "systemctl", "enable", f"{args.service_name}"], shell=False, 
-        check=True)
+            ["sudo", "systemctl", "enable", f"{args.service_name}"],
+            shell=False,
+            check=True,
+        )
         break
 
     if not os.path.isfile("settings.ini"):
         print("No settings.ini found. Creating one.")
         while True:
             subprocess.run(
-                ["sudo", "cp", "settings.ini.template", "settings.ini"], shell=False, 
-            check=True)
+                ["sudo", "cp", "settings.ini.template", "settings.ini"],
+                shell=False,
+                check=True,
+            )
             break
 
     print("vision-2022 is installed and enabled. It will start automatically on boot.")
