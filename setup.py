@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 import platform
 import argparse
@@ -10,7 +11,7 @@ config = ConfigParser()
 config.read("settings.ini")
 
 if platform.system() != "Linux":
-    exit("error: This can only run on Linux.")
+    sys.exit("error: This can only run on Linux.")
 
 try:
 
@@ -34,11 +35,13 @@ try:
                     "requirements.txt",
                 ],
                 shell=False,
+                check=True,
             )
             break
     else:
         print(
-            "Internet is not connected. Skipping dependency installations. This may cause problems."
+            "Internet is not connected. Skipping dependency installations. \
+            This may cause problems."
         )
 
     while True:
@@ -81,6 +84,7 @@ try:
         subprocess.run(
             ["sudo", "touch", f"/lib/systemd/system/{args.service_name}.service"],
             shell=False,
+            check=True,
         )
         break
 
@@ -99,12 +103,14 @@ WantedBy=multi-user.target"""
         f.write(service)
 
     while True:
-        subprocess.run(["sudo", "systemctl", "daemon-reload"], shell=False)
+        subprocess.run(["sudo", "systemctl", "daemon-reload"], shell=False, check=True)
         break
 
     while True:
         subprocess.run(
-            ["sudo", "systemctl", "enable", f"{args.service_name}"], shell=False
+            ["sudo", "systemctl", "enable", f"{args.service_name}"],
+            shell=False,
+            check=True,
         )
         break
 
@@ -112,7 +118,9 @@ WantedBy=multi-user.target"""
         print("No settings.ini found. Creating one.")
         while True:
             subprocess.run(
-                ["sudo", "cp", "settings.ini.template", "settings.ini"], shell=False
+                ["sudo", "cp", "settings.ini.template", "settings.ini"],
+                shell=False,
+                check=True,
             )
             break
 
