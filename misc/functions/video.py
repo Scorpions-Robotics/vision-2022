@@ -31,11 +31,11 @@ def focal_length(kpw, kd, kw) -> float:
 
 
 # Calculates the distance between camera and the hoop.
-def current_distance(kpw, kd, kw, w) -> float:
+def current_distance(kpw, kd, kw, w) -> float or None:
     try:
         return (kw * focal_length(kpw, kd, kw)) / w
     except Exception:
-        pass
+        return None
 
 
 # Checks if the hoop is in the frame.
@@ -80,7 +80,7 @@ def crosshair(frame):
     spt1 = frame_width // 2, frame_height // 2 - 20
     spt2 = frame_width // 2, frame_height // 2 + 20
 
-    crosshair = cv2.line(
+    processed_crosshair = cv2.line(
         frame,
         fpt1,
         fpt2,
@@ -88,11 +88,11 @@ def crosshair(frame):
         2,
     )
 
-    crosshair = cv2.line(
-        crosshair,
+    processed_crosshair = cv2.line(
+        processed_crosshair,
         spt1,
         spt2,
         color,
         2,
     )
-    return crosshair
+    return processed_crosshair
