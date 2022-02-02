@@ -21,8 +21,8 @@ config = ConfigParser()
 config.read("settings.ini")
 
 
-def func_replace(x):
-    return x.replace("\\", "/")
+def func_replace(path):
+    return path.replace("\\", "/")
 
 
 hoop_images = list(map(func_replace, glob("images/raw/hoop/hoop-ref-pic-raw-*.jpeg")))
