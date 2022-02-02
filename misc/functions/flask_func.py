@@ -10,3 +10,4 @@ config.read("settings.ini")
 def run_flask():
     if config.getint("fancy", "STREAM_FRAME"):
         return subprocess.Popen(["python", "misc/flask/flask_server.py"], shell=False)
+    return None

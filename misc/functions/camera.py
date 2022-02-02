@@ -24,7 +24,7 @@ def resolution_init(frame):
 
 
 # Gets the dimensions of the camera.
-def get_dimensions(cap, x_y) -> int:
+def get_dimensions(cap, x_y) -> int or None:
     if x_y == "x":
         try:
             dim_x = cap.get(3)
@@ -37,6 +37,7 @@ def get_dimensions(cap, x_y) -> int:
         except Exception:
             dim_y = 0
         return dim_y
+    return None
 
 
 # Takes action and defines the camera based on the OS type.
