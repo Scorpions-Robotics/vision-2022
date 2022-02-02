@@ -56,19 +56,14 @@ def nt_get_info(table) -> tuple:
 def set_alliance_hsv_upper(alliance) -> tuple:
     if alliance == "red":
         return tuple(map(int, config.get("colors", "RED_BALL_HSV_UPPER").split("\n")))
-    elif alliance == "blue":
-        return tuple(map(int, config.get("colors", "BLUE_BALL_HSV_UPPER").split("\n")))
-    else:
-        raise ValueError("Invalid alliance.")
+    return tuple(map(int, config.get("colors", "BLUE_BALL_HSV_UPPER").split("\n")))
 
 
 # Assign tuples for alliance lower hsv values.
 def set_alliance_hsv_lower(alliance) -> tuple or None:
     if alliance == "red":
         return tuple(map(int, config.get("colors", "RED_BALL_HSV_LOWER").split("\n")))
-    elif alliance == "blue":
-        return tuple(map(int, config.get("colors", "BLUE_BALL_HSV_LOWER").split("\n")))
-    return None
+    return tuple(map(int, config.get("colors", "BLUE_BALL_HSV_LOWER").split("\n")))
 
 
 # Assign tuples for hoop hsv values.
