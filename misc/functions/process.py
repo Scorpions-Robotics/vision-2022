@@ -7,7 +7,8 @@ config = ConfigParser()
 config.read("settings.ini")
 
 
-# Processes the frame, detects the cascade classifier and returns the frame with squares drawn on the detected object.
+# Processes the frame, detects the cascade classifier and
+# returns the frame with squares drawn on the detected object.
 def vision(frame, cascade_classifier) -> tuple:
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     objects = cascade_classifier.detectMultiScale(

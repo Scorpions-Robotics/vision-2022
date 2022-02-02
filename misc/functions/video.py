@@ -31,11 +31,11 @@ def focal_length(kpw, kd, kw) -> float:
 
 
 # Calculates the distance between camera and the hoop.
-def current_distance(kpw, kd, kw, w) -> float:
+def current_distance(kpw, kd, kw, w) -> float or None:
     try:
         return (kw * focal_length(kpw, kd, kw)) / w
     except Exception:
-        pass
+        return None
 
 
 # Checks if the hoop is in the frame.
