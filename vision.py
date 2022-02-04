@@ -27,6 +27,9 @@ ball_kd = config.getint("calibration", "BALL_KNOWN_DISTANCE")
 ball_kw = config.getint("calibration", "BALL_KNOWN_WIDTH")
 
 table = network.nt_init()
+ball_table = table.getSubTable("ball")
+hoop_table = table.getSubTable("hoop")
+
 cap = camera.camera_init()
 
 hoop_classifier = cv2.CascadeClassifier("hoop_classifier.xml")
@@ -65,7 +68,7 @@ while True:
                 d = video.safe_round(d)
                 r = video.safe_round(r)
 
-                network.put(table, mode, x, y, w, h, d, r, b)
+                network.put(hoop_table, mode, x, y, w, h, d, r, b)
 
             elif mode == "ball":
                 resolution_rate = 1
@@ -83,7 +86,7 @@ while True:
                 d = video.safe_round(d)
                 r = video.safe_round(r)
 
-                network.put(table, mode, x, y, w, h, d, r, b)
+                network.put(ball_table, mode, x, y, w, h, d, r, b)
 
             shortener.fancies(
                 result, cv2, footage_socket, result, mode, x, y, w, h, d, r, b
