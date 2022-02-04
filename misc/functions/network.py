@@ -23,11 +23,13 @@ def is_connected() -> bool:
 
 # Initialize NetworkTables.
 def nt_init() -> NetworkTables.getTable:
+    global nt_table
     if config.getint("network", "NETWORKTABLES_SERVER_MODE"):
         NetworkTables.initialize()
     else:
         NetworkTables.initialize(server=nt_server)
-    return NetworkTables.getTable(nt_table), NetworkTables.getTable(nt_table).getSubTable("ball"), NetworkTables.getTable(nt_table).getSubTable("hoop")
+    nt_table = NetworkTables.getTable(nt_table)
+    return nt_table, nt_table.getSubTable("ball"), nt_table.getSubTable("hoop")
 
 
 # Initialize NetworkTables listener.
