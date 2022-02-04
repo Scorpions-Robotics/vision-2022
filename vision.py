@@ -26,9 +26,7 @@ ball_kpw = config.getint("calibration", "BALL_KNOWN_PIXEL_WIDTH")
 ball_kd = config.getint("calibration", "BALL_KNOWN_DISTANCE")
 ball_kw = config.getint("calibration", "BALL_KNOWN_WIDTH")
 
-table = network.nt_init()
-ball_table = table.getSubTable("ball")
-hoop_table = table.getSubTable("hoop")
+table, ball_table, hoop_table = network.nt_init()
 
 cap = camera.camera_init()
 

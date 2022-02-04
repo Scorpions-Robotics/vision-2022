@@ -27,7 +27,7 @@ def nt_init() -> NetworkTables.getTable:
         NetworkTables.initialize()
     else:
         NetworkTables.initialize(server=nt_server)
-    return NetworkTables.getTable(nt_table)
+    return NetworkTables.getTable(nt_table), NetworkTables.getTable(nt_table).getSubTable("ball"), NetworkTables.getTable(nt_table).getSubTable("hoop")
 
 
 # Initialize NetworkTables listener.
