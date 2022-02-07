@@ -18,14 +18,6 @@ print(f"Starting vision-processing...\nTime (UTC): {datetime.utcnow()}")
 
 hoop_hsv_upper, hoop_hsv_lower = network.set_hoop_hsv()
 
-hoop_kpw = config.getint("calibration", "HOOP_KNOWN_PIXEL_WIDTH")
-hoop_kd = config.getint("calibration", "HOOP_KNOWN_DISTANCE")
-hoop_kw = config.getint("calibration", "HOOP_KNOWN_WIDTH")
-
-ball_kpw = config.getint("calibration", "BALL_KNOWN_PIXEL_WIDTH")
-ball_kd = config.getint("calibration", "BALL_KNOWN_DISTANCE")
-ball_kw = config.getint("calibration", "BALL_KNOWN_WIDTH")
-
 table = network.nt_init()
 ball_table = table.getSubTable("ball")
 hoop_table = table.getSubTable("hoop")
@@ -104,7 +96,9 @@ while True:
             except Exception:
                 pass
 
-    except (Exception, KeyboardInterrupt):
+    except (Exception, KeyboardInterrupt) as e:
+        if not e.startswith("KeyboardInterrupt"):
+            print(e)
         break
 
 camera.stop(cv2, cap, flask_popen)

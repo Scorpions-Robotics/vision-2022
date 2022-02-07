@@ -26,8 +26,11 @@ WORKING_DIR = /home/scorpions/repos/vision-2022/
 
 
 [calibration]
-; Height of the target. In centimeters.
-TARGET_HEIGHT = 264
+; Height of the hoop's vertical center. In centimeters.
+HOOP_HEIGHT = 264
+
+; Height of the ball's vertical center. In centimeters.
+BALL_HEIGHT = 12
 
 
 [cascade]
@@ -52,10 +55,10 @@ HOOP_HSV_UPPER = 75
                 255
 
 ; tuple(map(int, config.get("colors", "RED_BALL_HSV_{UPPER|LOWER}").split("\n")))
-RED_BALL_HSV_LOWER = 0
-                    60
-                    60
-RED_BALL_HSV_UPPER = 10
+RED_BALL_HSV_LOWER = 160
+                    165
+                    0
+RED_BALL_HSV_UPPER = 179
                     255
                     255
 
@@ -88,7 +91,7 @@ VERTICAL_FOV = 60
 ; Mount angle of camera while pointing at the hoop.
 MOUNT_ANGLE_HOOP = 35
 
-; Mount angle of camera while pointing at balls.
+; Mount angle of camera while pointing at balls. Negative if pointing downwards.
 MOUNT_ANGLE_BALL = -40
 
 ; Mount height of the from the ground. In centimeters.

@@ -19,9 +19,6 @@ frame_height = config.getint("camera", "FRAME_HEIGHT")
 vertical_fov = config.getfloat("camera", "VERTICAL_FOV")
 camera_mount_angle_hoop = config.getfloat("camera", "MOUNT_ANGLE_HOOP")
 camera_mount_angle_ball = config.getfloat("camera", "MOUNT_ANGLE_BALL")
-height_diff = config.getint("calibration", "TARGET_HEIGHT") - config.getint(
-    "camera", "CAMERA_MOUNT_HEIGHT"
-)
 
 
 # Calculates the distance between the crosshair and the hoop's center.
@@ -36,22 +33,35 @@ def rotation(dimension, x_y, w_h) -> float or None:
 # Calculates the distance between the camera and the hoop.
 # http://docs.limelightvision.io/en/latest/cs_estimating_distance.html
 def distance(target_center_y, mode):
-    if mode == "hoop":
-        mount_angle = camera_mount_angle_hoop
+    try:
+        if mode == "hoop":
+            mount_angle = camera_mount_angle_hoop
+            height_diff = config.getint("calibration", "HOOP_HEIGHT") - config.getint(
+                "camera", "CAMERA_MOUNT_HEIGHT"
+            )
 
-    else:
-        mount_angle = camera_mount_angle_ball
+        else:
+            mount_angle = camera_mount_angle_ball
+            height_diff = config.getint("calibration", "BALL_HEIGHT") - config.getint(
+                "camera", "CAMERA_MOUNT_HEIGHT"
+            )
 
-    pixel_per_angle = float(frame_height / vertical_fov)
-    middle_of_camera = frame_height / 2.0
-    pixel_diff = middle_of_camera - target_center_y
-    angle_diff = float(pixel_diff / pixel_per_angle)
-    a2 = math.radians(angle_diff)
-    a1 = math.radians(mount_angle)
-    if a1 + a2 == 0:
-        return 0
-    distance_to_target = abs(height_diff / math.tan(abs(a1 + a2)))
-    return float(distance_to_target)
+        pixel_per_angle = float(frame_height / vertical_fov)
+        middle_of_camera = frame_height / 2.0
+
+        pixel_diff = middle_of_camera - target_center_y
+        angle_diff = float(pixel_diff / pixel_per_angle)
+
+        a2 = math.radians(angle_diff)
+        a1 = math.radians(mount_angle)
+
+        if a1 + a2 == 0:
+            return 0
+
+        return abs(height_diff / math.tan(abs(a1 + a2)))
+
+    except Exception:
+        return None
 
 
 # Checks if the hoop is in the frame.
