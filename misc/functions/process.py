@@ -21,7 +21,7 @@ def vision(frame, cascade_classifier) -> tuple:
     for (x, y, w, h) in objects:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
-    if not objects:
+    if not len(objects):
         x, y, w, h = "none", "none", "none", "none"
 
     return frame, x, y, w, h

@@ -122,8 +122,8 @@ def stop(opencv_instance, cap=None, flask_popen=None):
             print("Wait for flask and cap to close...")
             continue
 
-        except (AttributeError, NameError):
-            pass
+        except (AttributeError, NameError) as e:
+            print(e)
 
         else:
             print("All stopped.")
