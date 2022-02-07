@@ -61,7 +61,10 @@ while True:
                 hsv_mask = process.mask_color(frame, (hoop_hsv_lower), (hoop_hsv_upper))
                 result, x, y, w, h = process.vision(hsv_mask, hoop_classifier)
 
-                d = video.current_distance(hoop_kpw, hoop_kd, hoop_kw, w)
+                target_center_y = video.rotation(
+                    config.getint("camera", "FRAME_HEIGHT"), y, h
+                )
+                d = video.distance(target_center_y, mode)
                 r = video.rotation(config.getint("camera", "FRAME_WIDTH"), x, w)
                 b = int(video.is_detected(d))
 
@@ -77,7 +80,10 @@ while True:
                 hsv_mask = process.mask_color(frame, (ball_hsv_lower), (ball_hsv_upper))
                 result, x, y, w, h = process.vision(hsv_mask, ball_classifier)
 
-                d = video.current_distance(ball_kpw, ball_kd, ball_kw, w)
+                target_center_y = video.rotation(
+                    config.getint("camera", "FRAME_HEIGHT"), y, h
+                )
+                d = video.distance(target_center_y, mode)
                 r = video.rotation(
                     config.getint("camera", "FRAME_WIDTH") * resolution_rate, x, w
                 )

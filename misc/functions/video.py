@@ -1,6 +1,7 @@
 import cv2
 import sys
 import imutils
+import math
 from pathlib import Path
 from configparser import ConfigParser
 
@@ -15,27 +16,42 @@ config.read("settings.ini")
 frame_width = config.getint("camera", "FRAME_WIDTH")
 frame_height = config.getint("camera", "FRAME_HEIGHT")
 
+vertical_fov = config.getfloat("camera", "VERTICAL_FOV")
+camera_mount_angle_hoop = config.getfloat("camera", "MOUNT_ANGLE_HOOP")
+camera_mount_angle_ball = config.getfloat("camera", "MOUNT_ANGLE_BALL")
+height_diff = config.getint("calibration", "TARGET_HEIGHT") - config.getint(
+    "camera", "CAMERA_MOUNT_HEIGHT"
+)
+
 
 # Calculates the distance between the crosshair and the hoop's center.
-def rotation(x_defined, x, w) -> float or None:
+def rotation(dimension, x_y, w_h) -> float or None:
     try:
-        x_c = x + (w / 2)
-        return x_c - (x_defined / 2)
+        dimension_c = x_y + (w_h / 2)
+        return dimension_c - (dimension / 2)
     except Exception:
         return None
 
 
-# Calculates the focal length.
-def focal_length(kpw, kd, kw) -> float:
-    return (kpw * kd) / kw
+# Calculates the distance between the camera and the hoop.
+# http://docs.limelightvision.io/en/latest/cs_estimating_distance.html
+def distance(target_center_y, mode):
+    if mode == "hoop":
+        mount_angle = camera_mount_angle_hoop
 
+    else:
+        mount_angle = camera_mount_angle_ball
 
-# Calculates the distance between camera and the hoop.
-def current_distance(kpw, kd, kw, w) -> float or None:
-    try:
-        return (kw * focal_length(kpw, kd, kw)) / w
-    except Exception:
-        return None
+    pixel_per_angle = float(frame_height / vertical_fov)
+    middle_of_camera = frame_height / 2.0
+    pixel_diff = middle_of_camera - target_center_y
+    angle_diff = float(pixel_diff / pixel_per_angle)
+    a2 = math.radians(angle_diff)
+    a1 = math.radians(mount_angle)
+    if a1 + a2 == 0:
+        return 0
+    distance_to_target = abs(height_diff / math.tan(abs(a1 + a2)))
+    return float(distance_to_target)
 
 
 # Checks if the hoop is in the frame.
@@ -43,10 +59,10 @@ def is_detected(key) -> bool:
     return key is not None
 
 
-# Safely rounds input to 2 decimal places.
-def safe_round(key) -> float:
+# Safely rounds input to wanted decimal places.
+def safe_round(key, point: int = 2) -> float:
     try:
-        return round(key, 2)
+        return round(key, point)
     except Exception:
         return key
 
