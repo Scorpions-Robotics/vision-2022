@@ -26,23 +26,11 @@ WORKING_DIR = /home/scorpions/repos/vision-2022/
 
 
 [calibration]
-; In inches. Measure the real width of the hoop.
-HOOP_KNOWN_WIDTH = 43
+; Height of the hoop's vertical center. In centimeters.
+HOOP_HEIGHT = 264
 
-; In pixels. Measure the pixel width of the hoop. Run misc/calibration/pixel_calculator.py.
-HOOP_KNOWN_PIXEL_WIDTH = 231
-
-; In inches. Measure the real distance from the hoop to the camera.
-HOOP_KNOWN_DISTANCE = 124
-
-; In inches. Measure the real width of the ball.
-BALL_KNOWN_WIDTH = 43
-
-; In pixels. Measure the pixel width of the ball. Run misc/calibration/pixel_calculator.py.
-BALL_KNOWN_PIXEL_WIDTH = 231
-
-; In inches. Measure the real distance from the ball to the camera.
-BALL_KNOWN_DISTANCE = 124
+; Height of the ball's vertical center. In centimeters.
+BALL_HEIGHT = 12
 
 
 [cascade]
@@ -67,10 +55,10 @@ HOOP_HSV_UPPER = 75
                 255
 
 ; tuple(map(int, config.get("colors", "RED_BALL_HSV_{UPPER|LOWER}").split("\n")))
-RED_BALL_HSV_LOWER = 0
-                    60
-                    60
-RED_BALL_HSV_UPPER = 10
+RED_BALL_HSV_LOWER = 160
+                    165
+                    0
+RED_BALL_HSV_UPPER = 179
                     255
                     255
 
@@ -96,6 +84,18 @@ WINDOWS_HOOP_EXPOSURE = -10
 ; Width and height of the frame. Default is 320x240. Use 320x240 on coprocessor for more performance. You can use any resolution as long as you keep the ratio at 4:3.
 FRAME_WIDTH = 320
 FRAME_HEIGHT = 240
+
+; Vertical Field of View of camera.
+VERTICAL_FOV = 60
+
+; Mount angle of camera while pointing at the hoop.
+MOUNT_ANGLE_HOOP = 35
+
+; Mount angle of camera while pointing at balls. Negative if pointing downwards.
+MOUNT_ANGLE_BALL = -40
+
+; Mount height of the from the ground. In centimeters.
+CAMERA_MOUNT_HEIGHT = 42
 
 
 [fancy]

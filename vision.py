@@ -18,14 +18,6 @@ print(f"Starting vision-processing...\nTime (UTC): {datetime.utcnow()}")
 
 hoop_hsv_upper, hoop_hsv_lower = network.set_hoop_hsv()
 
-hoop_kpw = config.getint("calibration", "HOOP_KNOWN_PIXEL_WIDTH")
-hoop_kd = config.getint("calibration", "HOOP_KNOWN_DISTANCE")
-hoop_kw = config.getint("calibration", "HOOP_KNOWN_WIDTH")
-
-ball_kpw = config.getint("calibration", "BALL_KNOWN_PIXEL_WIDTH")
-ball_kd = config.getint("calibration", "BALL_KNOWN_DISTANCE")
-ball_kw = config.getint("calibration", "BALL_KNOWN_WIDTH")
-
 table = network.nt_init()
 ball_table = table.getSubTable("ball")
 hoop_table = table.getSubTable("hoop")
@@ -61,7 +53,8 @@ while True:
                 hsv_mask = process.mask_color(frame, (hoop_hsv_lower), (hoop_hsv_upper))
                 result, x, y, w, h = process.vision(hsv_mask, hoop_classifier)
 
-                d = video.current_distance(hoop_kpw, hoop_kd, hoop_kw, w)
+                target_center_y = video.dimension_center(y, h)
+                d = video.distance(target_center_y, mode)
                 r = video.rotation(config.getint("camera", "FRAME_WIDTH"), x, w)
                 b = int(video.is_detected(d))
 
@@ -77,7 +70,8 @@ while True:
                 hsv_mask = process.mask_color(frame, (ball_hsv_lower), (ball_hsv_upper))
                 result, x, y, w, h = process.vision(hsv_mask, ball_classifier)
 
-                d = video.current_distance(ball_kpw, ball_kd, ball_kw, w)
+                target_center_y = video.dimension_center(y, h)
+                d = video.distance(target_center_y, mode)
                 r = video.rotation(
                     config.getint("camera", "FRAME_WIDTH") * resolution_rate, x, w
                 )
