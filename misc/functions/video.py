@@ -30,6 +30,13 @@ def rotation(dimension, x_y, w_h) -> float or None:
         return None
 
 
+def dimension_center(x_y, w_h) -> float or None:
+    try:
+        return x_y + (w_h / 2)
+    except Exception:
+        return None
+
+
 # Calculates the distance between the camera and the hoop.
 # http://docs.limelightvision.io/en/latest/cs_estimating_distance.html
 def distance(target_center_y, mode):
