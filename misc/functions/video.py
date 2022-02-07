@@ -60,7 +60,7 @@ def distance(target_center_y, mode):
 
         return abs(height_diff / math.tan(abs(a1 + a2)))
 
-    except Exception:
+    except Exception as e:
         return None
 
 
