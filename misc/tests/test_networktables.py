@@ -1,5 +1,5 @@
-from pathlib import Path
 import sys
+from pathlib import Path
 
 sys.path.append(str(Path("..").absolute().parent))
 from misc.functions import network

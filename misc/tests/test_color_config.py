@@ -1,7 +1,7 @@
-from configparser import ConfigParser
 import cv2
 import sys
 from pathlib import Path
+from configparser import ConfigParser
 
 
 sys.path.append(str(Path("..").absolute().parent))
