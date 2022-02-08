@@ -18,7 +18,7 @@ We use the Open Source Computer Vision Library [OpenCV](https://opencv.org/) wit
 
 1. Detect the host computer's OS, hostname and IP address.
 
-2. Initialize NetworkTables client and stream server, then connect to the "vision" table. 
+2. Initialize NetworkTables client and stream server, then connect to the "vision" table.
 
 3. Define the camera according to the OS and parameters.
 
@@ -79,11 +79,11 @@ We use the Open Source Computer Vision Library [OpenCV](https://opencv.org/) wit
 
 [![Instagram](https://img.shields.io/badge/scorpions7672-E1306C?style=flat&logo=instagram&logoColor=white)](https://www.instagram.com/scorpions7672) [![YouTube](https://img.shields.io/badge/Scorpions%207672-FF0000?style=flat&logo=youtube)](https://www.youtube.com/channel/UCLsK3acedtyaD6dABW39g2Q) [![Discord](https://img.shields.io/discord/854741003700666388.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/MqvbYPecgt)
 
-- Instagram: https://instagram.com/scorpions7672
+- Instagram: <https://instagram.com/scorpions7672>
 
-- YouTube: https://www.youtube.com/channel/UCLsK3acedtyaD6dABW39g2Q
+- YouTube: <https://www.youtube.com/channel/UCLsK3acedtyaD6dABW39g2Q>
 
-- Discord Server: https://discord.gg/MqvbYPecgt
+- Discord Server: <https://discord.gg/MqvbYPecgt>
 
 &nbsp;
 
@@ -113,4 +113,4 @@ We use the Open Source Computer Vision Library [OpenCV](https://opencv.org/) wit
 
 ## License
 
-*This project is licensed under the [Apache-2.0](https://raw.githubusercontent.com/Scorpions-Robotics/vision-2022/HEAD/LICENSE) license. All rights reserved.* 
+*This project is licensed under the [Apache-2.0](https://raw.githubusercontent.com/Scorpions-Robotics/vision-2022/HEAD/LICENSE) license. All rights reserved.*
