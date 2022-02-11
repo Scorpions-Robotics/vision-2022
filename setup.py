@@ -13,13 +13,16 @@ config.read("settings.ini")
 if platform.system() != "Linux":
     sys.exit("error: This can only run on Linux.")
 
-try:
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "-n", "--service_name", help="Name of the service you want to create."
+)
+args = parser.parse_args()
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "-n", "--service_name", help="Name of the service you want to create."
-    )
-    args = parser.parse_args()
+if os.path.isfile(f"/lib/systemd/system/{args.service_name}"):
+    os.remove(f"/lib/systemd/system/{args.service_name}")
+
+try:
 
     if network.is_connected():
         while True:
@@ -36,6 +39,16 @@ try:
                 ],
                 shell=False,
                 check=True,
+            )
+            break
+
+        while True:
+            subprocess.run(["sudo", "chmod", "+x", "*"], shell=False, check=True)
+            break
+
+        while True:
+            subprocess.run(
+                ["sudo", "./misc/bash/install_os_dependencies.sh"], shell=False
             )
             break
     else:
