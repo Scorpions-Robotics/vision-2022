@@ -15,7 +15,10 @@ if platform.system() != "Linux":
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
-    "-n", "--service_name", help="Name of the service you want to create."
+    "-n",
+    "--service_name",
+    help="Name of the service you want to create.",
+    default="vision",
 )
 args = parser.parse_args()
 
