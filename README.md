@@ -57,6 +57,22 @@ We use the Open Source Computer Vision Library [OpenCV](https://opencv.org/) wit
 
 &nbsp;
 
+## Installation for ROB (Run On Boot) Usage (Only for Linux):
+
+Use this installation method to make the script run on boot.
+
+1. Clone the repository.&emsp;```git clone https://github.com/Scorpions-Robotics/vision-2022.git```
+
+2. Run:
+    ```bash
+    sudo python setup.py --service_name service-name
+    ```
+    *service_name* defaults to *"vision"* if not provided
+    
+3. Enjoy
+
+&nbsp;
+
 ## Usage:
 
 1. Copy ``settings.ini.template`` and rename it to ``settings.ini``. Then edit it to your needs.
@@ -89,7 +105,7 @@ We use the Open Source Computer Vision Library [OpenCV](https://opencv.org/) wit
 
 ## Contact
 
-- E-mail: scorpions7672@gmail.com
+- E-mail: scorpions7672@bahcesehir.k12.tr
 
 - Address: [Molla Yusuf Mah. Hürriyet Cad. No: 25 Konyaaltı/Antalya, Türkiye](https://goo.gl/maps/5YjF16fynHth8VVB9)
 
