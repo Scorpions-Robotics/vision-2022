@@ -74,11 +74,11 @@ def set_hoop_hsv() -> tuple:
 
 
 # Put NetworkTables variables.
-def put(table, mode, x, y, w, h, d, r, b):
-    table.putString(f"{mode}_X", x)
-    table.putString(f"{mode}_Y", y)
-    table.putString(f"{mode}_W", w)
-    table.putString(f"{mode}_H", h)
-    table.putString(f"{mode}_D", d)
-    table.putString(f"{mode}_R", r)
-    table.putString(f"{mode}_B", b)
+def put(sub_table, mode, x, y, w, h, d, r, b):
+    sub_table.putString(f"{mode}_X", x)
+    sub_table.putString(f"{mode}_Y", y)
+    sub_table.putString(f"{mode}_W", w)
+    sub_table.putString(f"{mode}_H", h)
+    sub_table.putString(f"{mode}_D", d)
+    sub_table.putString(f"{mode}_R", r)
+    sub_table.putString(f"{mode}_B", b)
