@@ -92,7 +92,8 @@ while True:
             except Exception:
                 pass
 
-    except (Exception, KeyboardInterrupt):
+    except (Exception, KeyboardInterrupt) as e:
+        print(e)
         break
 
 camera.stop(cv2, cap, flask_popen)
