@@ -34,7 +34,7 @@ if not os.path.isfile("settings.ini"):
             check=True,
         )
         break
-    exit("You should edit settings.ini to your needs before running this script.")
+    sys.exit("You should edit settings.ini to your needs before running this script.")
 
 
 try:
