@@ -25,6 +25,18 @@ args = parser.parse_args()
 if os.path.isfile(f"/lib/systemd/system/{args.service_name}"):
     os.remove(f"/lib/systemd/system/{args.service_name}")
 
+if not os.path.isfile("settings.ini"):
+    print("No settings.ini found. Creating one.")
+    while True:
+        subprocess.run(
+            ["sudo", "cp", "settings.ini.template", "settings.ini"],
+            shell=False,
+            check=True,
+        )
+        break
+    exit("You should edit settings.ini to your needs before running this script.")
+
+
 try:
 
     if network.is_connected():
@@ -134,17 +146,9 @@ WantedBy=multi-user.target"""
         )
         break
 
-    if not os.path.isfile("settings.ini"):
-        print("No settings.ini found. Creating one.")
-        while True:
-            subprocess.run(
-                ["sudo", "cp", "settings.ini.template", "settings.ini"],
-                shell=False,
-                check=True,
-            )
-            break
-
-    print("vision-2022 is installed and enabled. It will start automatically on boot.")
+    print(
+        f"vision-2022 is installed and enabled. It will start automatically on boot.\nCheck service status with 'systemctl status {args.service_name}'."
+    )
 
 except Exception as e:
     print("error: Please run as root. (sudo python setup.py)")
