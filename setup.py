@@ -44,6 +44,7 @@ try:
             subprocess.run(
                 [
                     "sudo",
+                    "-H",
                     "python",
                     "-m",
                     "pip",
@@ -120,7 +121,8 @@ try:
         )
         break
 
-    service = f"""[Unit]
+    service = f"""
+[Unit]
 Requires=network-online.target
 After=network-online.target
 Description="{args.service_name} Service"
@@ -129,7 +131,8 @@ WorkingDirectory={config.get("system","WORKING_DIR")}
 ExecStart=/usr/bin/python {config.get("system","WORKING_DIR")}vision.py
 User={args.service_name}
 [Install]
-WantedBy=multi-user.target"""
+WantedBy=multi-user.target
+"""
 
     with open(f"/lib/systemd/system/{args.service_name}.service", "w") as f:
         f.write(service)
@@ -151,5 +154,5 @@ WantedBy=multi-user.target"""
     )
 
 except Exception as e:
-    print("error: Please run as root. (sudo python setup.py)")
+    print("error: Please run as root. (sudo -H python setup.py)")
     print(e)
