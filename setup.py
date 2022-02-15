@@ -46,7 +46,9 @@ try:
             break
 
         while True:
-            subprocess.run(["sudo", "chmod", "+x", "*"], shell=False, check=True)
+            subprocess.run(
+                ["sudo", "chmod", "+x", "misc/bash/*"], shell=False, check=True
+            )
             break
 
         while True:
