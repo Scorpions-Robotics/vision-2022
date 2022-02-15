@@ -47,7 +47,7 @@ try:
 
         while True:
             subprocess.run(
-                ["sudo", "chmod", "+x", f"{os.getcwd()}/misc/bash/*"],
+                ["sudo", "chmod", "+x", "misc/bash/install_os_dependencies.sh"],
                 shell=False,
                 check=True,
             )
