@@ -9,7 +9,7 @@ from misc.functions import camera
 
 
 mode = input("Enter mode: ")
-test_type = input("Enter test type (video or image): ")
+test_type = input("Enter test type (camera or image): ")
 classifier = cv2.CascadeClassifier(input("Enter classifier path: "))
 mask = input("Do you want to mask colors? (y/n): ")
 
@@ -36,7 +36,7 @@ if mask is True:
     )
 
 
-if test_type == "video":
+if test_type == "camera":
     cap = camera.camera_init()
     while True:
         grabbed, frame = cap.read()
