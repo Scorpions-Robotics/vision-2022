@@ -27,7 +27,7 @@ WORKING_DIR = /home/scorpions/repos/vision-2022/
 
 [calibration]
 ; Height of the hoop's vertical center. In centimeters.
-HOOP_HEIGHT = 264
+HOOP_HEIGHT = 260
 
 ; Height of the ball's vertical center. In centimeters.
 BALL_HEIGHT = 12
@@ -47,10 +47,10 @@ MIN_SIZE = 15
 ; Set upper and lower HSV values for the requested color.
 
 ; tuple(map(int, config.get("colors", "HOOP_HSV_{UPPER|LOWER}").split("\n")))
-HOOP_HSV_LOWER = 40
-                60
-                60
-HOOP_HSV_UPPER = 75
+HOOP_HSV_LOWER = 60
+                150
+                45
+HOOP_HSV_UPPER = 80
                 255
                 255
 
