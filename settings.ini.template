@@ -86,13 +86,13 @@ FRAME_WIDTH = 320
 FRAME_HEIGHT = 240
 
 ; Vertical Field of View of camera.
-VERTICAL_FOV = 60
+VERTICAL_FOV = 58
 
 ; Mount angle of camera while pointing at the hoop.
-MOUNT_ANGLE_HOOP = 35
+MOUNT_ANGLE_HOOP = 30
 
 ; Mount angle of camera while pointing at balls. Negative if pointing downwards.
-MOUNT_ANGLE_BALL = -40
+MOUNT_ANGLE_BALL = -30
 
 ; Mount height of the from the ground. In centimeters.
 CAMERA_MOUNT_HEIGHT = 42

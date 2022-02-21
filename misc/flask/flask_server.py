@@ -37,4 +37,4 @@ def video_feed():
 
 
 if __name__ == "__main__":
-    app.run(host=config.get("network", "FLASK_SERVER"))
+    app.run(host=config.get("network", "FLASK_SERVER"), port=80)
