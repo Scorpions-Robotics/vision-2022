@@ -47,8 +47,8 @@ MIN_SIZE = 15
 ; Set upper and lower HSV values for the requested color.
 
 ; tuple(map(int, config.get("colors", "HOOP_HSV_{UPPER|LOWER}").split("\n")))
-HOOP_HSV_LOWER = 45
-                150
+HOOP_HSV_LOWER = 40
+                100
                 60
 HOOP_HSV_UPPER = 80
                 255
