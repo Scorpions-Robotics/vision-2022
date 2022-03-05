@@ -102,13 +102,14 @@ try:
 
     while True:
         subprocess.run(
-            ["sudo", "usermod", "-a", "-G", "sudo", f"{args.service_name}"], shell=False
-        )
-        break
-
-    while True:
-        subprocess.run(
-            ["sudo", "usermod", "-a", "-G", "video", f"{args.service_name}"],
+            [
+                "sudo",
+                "usermod",
+                "-a",
+                "-G",
+                "sudo,video,www-data,netdev",
+                f"{args.service_name}",
+            ],
             shell=False,
         )
         break
