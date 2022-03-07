@@ -38,11 +38,9 @@ def nt_listener_init() -> NetworkTables.getTable:
 
 # Initialize zmq server.
 def zmq_init() -> zmq.Context:
-    hostname = socket.gethostname()
-    host_ip = socket.gethostbyname(hostname)
     context = zmq.Context()
     footage_socket = context.socket(zmq.PUB)
-    footage_socket.connect(f"tcp://{host_ip}:5555")
+    footage_socket.connect(f"tcp://{config.get('network', 'FLASK_SERVER')}:5802")
 
     return footage_socket
 
