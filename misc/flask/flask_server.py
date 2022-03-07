@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 import zmq
-import waitress
 from flask import Flask, render_template, Response
 from configparser import ConfigParser
 
