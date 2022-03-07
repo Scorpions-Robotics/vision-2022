@@ -38,4 +38,4 @@ def video_feed():
 
 
 if __name__ == "__main__":
-    waitress.serve(app, host=config.get("network", "FLASK_SERVER"), port=5801)
+    app.run(host=config.get("network", "FLASK_SERVER"), port=5801)

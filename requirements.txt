@@ -7,4 +7,3 @@ black
 flask
 requests
 pynput
-waitress
