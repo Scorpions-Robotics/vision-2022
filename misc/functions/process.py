@@ -7,6 +7,7 @@ from configparser import ConfigParser
 config = ConfigParser()
 config.read("settings.ini")
 
+data = []  # For noise_reduction algorithm
 
 # Processes the frame, detects the cascade classifier and
 # returns the biggest detected object's coordinates.
@@ -50,7 +51,6 @@ def mask_color(frame, lower, upper):
     return color
 
 
-data = []
 # Moving average filter for noise reduction.
 def reduce_noise(window_length: int, measurement: float) -> float or None:
     if window_length == None or measurement == None:
