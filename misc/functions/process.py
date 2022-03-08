@@ -9,6 +9,7 @@ config.read("settings.ini")
 
 data = []  # For noise_reduction algorithm
 
+
 # Processes the frame, detects the cascade classifier and
 # returns the biggest detected object's coordinates.
 def vision(frame, cascade_classifier) -> tuple:
