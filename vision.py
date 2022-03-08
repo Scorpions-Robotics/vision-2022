@@ -61,6 +61,9 @@ while True:
                 d = video.safe_round(d)
                 r = video.safe_round(r)
 
+                d = process.reduce_noise(10, d)
+                r = process.reduce_noise(10, r)
+
                 network.put(hoop_table, mode, x, y, w, h, d, r, b)
 
             elif mode == "ball":
@@ -79,6 +82,9 @@ while True:
 
                 d = video.safe_round(d)
                 r = video.safe_round(r)
+
+                d = process.reduce_noise(10, d)
+                r = process.reduce_noise(10, r)
 
                 network.put(ball_table, mode, x, y, w, h, d, r, b)
 
