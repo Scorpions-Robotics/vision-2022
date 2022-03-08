@@ -52,7 +52,10 @@ def mask_color(frame, lower, upper):
 
 data = []
 # Moving average filter for noise reduction.
-def reduce_noise(window_length: int, measurement: float) -> float:
+def reduce_noise(window_length: int, measurement: float) -> float or None:
+    if window_length == None or measurement == None:
+        return None
+
     data.append(measurement)
     if len(data) > window_length:
         data.pop(0)
