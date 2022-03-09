@@ -1,6 +1,5 @@
 import requests
 import zmq
-import socket
 from networktables import NetworkTables
 from configparser import ConfigParser
 
