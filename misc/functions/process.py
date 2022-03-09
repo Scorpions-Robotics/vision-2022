@@ -26,7 +26,7 @@ def vision(frame, cascade_classifier) -> tuple:
         wh = {index: object[2] * object[3] for index, object in enumerate(detected)}
         sorted_wh = sorted(wh.items(), key=operator.itemgetter(1))
         x, y, w, h = detected[sorted_wh[-1][0]]
-        
+
         cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
     except Exception:
@@ -52,13 +52,15 @@ def mask_color(frame, lower, upper):
 
 
 # Moving average filter for noise reduction.
-def reduce_noise(window_length: int, measurement: float or str, lst: str) -> float or None:
-    
+def reduce_noise(
+    window_length: int, measurement: float or str, lst: str
+) -> float or None:
+
     if f"{lst}_" not in globals():
         globals()[f"{lst}_"] = []
-        
+
     lst_var = globals()[f"{lst}_"]
-    
+
     try:
         if measurement is None:
             del lst_var[:]
@@ -69,8 +71,7 @@ def reduce_noise(window_length: int, measurement: float or str, lst: str) -> flo
         if len(lst_var) > window_length:
             del lst_var[0]
 
-        return (sum(lst_var) / len(lst_var))
+        return sum(lst_var) / len(lst_var)
 
     except ZeroDivisionError:
         return None
-        
