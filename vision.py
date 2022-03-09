@@ -27,6 +27,8 @@ cap = camera.camera_init()
 hoop_classifier = cv2.CascadeClassifier("hoop_classifier.xml")
 ball_classifier = cv2.CascadeClassifier("ball_classifier.xml")
 
+window_length = config.getint("calibration", "WINDOW_LENGTH")
+
 footage_socket = network.zmq_init()
 flask_popen = flask_func.run_flask()
 
@@ -58,11 +60,11 @@ while True:
                 r = video.rotation(config.getint("camera", "FRAME_WIDTH"), x, w)
                 b = int(video.is_detected(d))
 
+                d = process.reduce_noise(window_length, d, "distance_lst")
+                r = process.reduce_noise(window_length, r, "rotation_lst")
+
                 d = video.safe_round(d)
                 r = video.safe_round(r)
-
-                d = process.reduce_noise(10, d)
-                r = process.reduce_noise(10, r)
 
                 network.put(hoop_table, mode, x, y, w, h, d, r, b)
 
@@ -80,11 +82,11 @@ while True:
                 )
                 b = int(video.is_detected(d))
 
+                d = process.reduce_noise(window_length, d, "distance_lst")
+                r = process.reduce_noise(window_length, r, "rotation_lst")
+
                 d = video.safe_round(d)
                 r = video.safe_round(r)
-
-                d = process.reduce_noise(10, d)
-                r = process.reduce_noise(10, r)
 
                 network.put(ball_table, mode, x, y, w, h, d, r, b)
 

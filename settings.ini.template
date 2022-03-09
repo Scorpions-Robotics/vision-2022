@@ -32,6 +32,9 @@ HOOP_HEIGHT = 260
 ; Height of the ball's vertical center. In centimeters.
 BALL_HEIGHT = 12
 
+; Noise reduction cache size. Greater values will reduce noise, but will also increase latency. Default is 40.
+WINDOW_LENGTH = 40
+
 
 [cascade]
 ; Cascade classifier settings.

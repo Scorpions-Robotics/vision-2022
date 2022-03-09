@@ -7,8 +7,6 @@ from configparser import ConfigParser
 config = ConfigParser()
 config.read("settings.ini")
 
-data = []  # For noise_reduction algorithm
-
 
 # Processes the frame, detects the cascade classifier and
 # returns the biggest detected object's coordinates.
@@ -28,6 +26,7 @@ def vision(frame, cascade_classifier) -> tuple:
         wh = {index: object[2] * object[3] for index, object in enumerate(detected)}
         sorted_wh = sorted(wh.items(), key=operator.itemgetter(1))
         x, y, w, h = detected[sorted_wh[-1][0]]
+        
         cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
     except Exception:
@@ -53,12 +52,25 @@ def mask_color(frame, lower, upper):
 
 
 # Moving average filter for noise reduction.
-def reduce_noise(window_length: int, measurement: float) -> float or None:
-    if (window_length, measurement) in None:
+def reduce_noise(window_length: int, measurement: float or str, lst: str) -> float or None:
+    
+    if f"{lst}_" not in globals():
+        globals()[f"{lst}_"] = []
+        
+    lst_var = globals()[f"{lst}_"]
+    
+    try:
+        if measurement is None:
+            del lst_var[:]
+            return None
+
+        lst_var.append(measurement)
+
+        if len(lst_var) > window_length:
+            del lst_var[0]
+
+        return (sum(lst_var) / len(lst_var))
+
+    except ZeroDivisionError:
         return None
-
-    data.append(measurement)
-    if len(data) > window_length:
-        data.pop(0)
-
-    return sum(data) / len(data)
+        
