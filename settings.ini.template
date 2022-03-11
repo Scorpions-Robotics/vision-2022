@@ -32,15 +32,15 @@ HOOP_HEIGHT = 260
 ; Height of the ball's vertical center. In centimeters.
 BALL_HEIGHT = 12
 
-; Noise reduction cache size. Greater values will reduce noise, but will also increase latency. Default is 40.
-WINDOW_LENGTH = 40
+; Noise reduction cache size. Greater values will reduce noise, but will also increase latency. Default is 10.
+WINDOW_LENGTH = 10
 
 
 [cascade]
 ; Cascade classifier settings.
 
 ; Set between 2 and 6. Higher is more accurate but slower. Default is 3. This should be an integer.
-MIN_NEIGHBORS = 3
+MIN_NEIGHBORS = 4
 
 ; Minimum size of a detected object. Default is 15x15. This should be a tuple.
 MIN_SIZE = 15
