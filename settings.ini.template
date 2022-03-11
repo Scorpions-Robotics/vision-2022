@@ -39,7 +39,7 @@ WINDOW_LENGTH = 10
 [cascade]
 ; Cascade classifier settings.
 
-; Set between 2 and 6. Higher is more accurate but slower. Default is 3. This should be an integer.
+; Set between 2 and 6. Higher is more accurate but slower. Default is 4. This should be an integer.
 MIN_NEIGHBORS = 4
 
 ; Minimum size of a detected object. Default is 15x15. This should be a tuple.
