@@ -79,7 +79,7 @@ BLUE_BALL_HSV_UPPER = 125
 CAMERA_INDEX = -1
 
 ; Only used on Linux. Gets values between 1 and 5000. Default is 3.
-LINUX_HOOP_EXPOSURE = 3
+LINUX_HOOP_EXPOSURE = 2
 
 ; Only used on Windows. Default is -10.
 WINDOWS_HOOP_EXPOSURE = -10
@@ -92,7 +92,7 @@ FRAME_HEIGHT = 240
 VERTICAL_FOV = 58
 
 ; Mount angle of camera while pointing at the hoop.
-MOUNT_ANGLE_HOOP = 30
+MOUNT_ANGLE_HOOP = 36
 
 ; Mount angle of camera while pointing at balls. Negative if pointing downwards.
 MOUNT_ANGLE_BALL = -30

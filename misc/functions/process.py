@@ -17,6 +17,7 @@ def vision(frame, cascade_classifier) -> tuple:
         scaleFactor=1.05,
         minNeighbors=config.getint("cascade", "MIN_NEIGHBORS"),
         minSize=tuple(map(int, config.get("cascade", "MIN_SIZE").split("\n"))),
+        maxSize=(115, 40),
     )
 
     detected = []
