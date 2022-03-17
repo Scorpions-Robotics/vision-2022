@@ -78,7 +78,7 @@ BLUE_BALL_HSV_UPPER = 125
 ; Index number of the camera to use. Default is -1.
 CAMERA_INDEX = -1
 
-; Only used on Linux. Gets values between 1 and 5000. Default is 3.
+; Only used on Linux. Gets values between 1 and 5000. Default is 2.
 LINUX_HOOP_EXPOSURE = 2
 
 ; Only used on Windows. Default is -10.
@@ -119,3 +119,6 @@ STREAM_FRAME = 1
 
 ; If the values are printed or not. Gets values 0 or 1. Default is 1.
 PRINT_VALUES = 1
+
+; If the distance is drawn on the frame. Default is 1.
+SHOW_DISTANCE = 1

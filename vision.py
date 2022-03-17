@@ -66,6 +66,8 @@ while True:
                 d = video.safe_round(d)
                 r = video.safe_round(r)
 
+                result = video.show_distance(result, d, mode)
+
                 network.put(hoop_table, mode, x, y, w, h, d, r, b)
 
             elif mode == "ball":
@@ -87,6 +89,8 @@ while True:
 
                 d = video.safe_round(d)
                 r = video.safe_round(r)
+
+                result = video.show_distance(result, d, mode)
 
                 network.put(ball_table, mode, x, y, w, h, d, r, b)
 

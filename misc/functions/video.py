@@ -1,5 +1,7 @@
 import cv2
 import sys
+
+from cv2 import line
 import imutils
 import math
 from pathlib import Path
@@ -129,3 +131,24 @@ def crosshair(frame):
         2,
     )
     return processed_crosshair
+
+
+def show_distance(frame, distance: float, mode: str):
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    color = (0, 255, 0)
+    text = f"Distance: {str(safe_round(distance))}cm"
+
+    if mode == "hoop":
+        text += " (Hoop)"
+
+    cv2.putText(
+        frame,
+        text,
+        (10, frame_height - 10),
+        font,
+        0.5,
+        color,
+        1,
+    )
+    
+    return frame

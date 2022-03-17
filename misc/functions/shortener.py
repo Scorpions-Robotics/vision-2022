@@ -22,3 +22,6 @@ def fancies(result, cv2, footage_socket, frame, mode, x, y, w, h, d, r, b):
         encoded, buffer = cv2.imencode(".jpg", video.crosshair(frame))
         if encoded:
             footage_socket.send(buffer)
+
+    if config.getint("fancy", "SHOW_DISTANCE"):
+        video.show_distance(result, d, mode)
