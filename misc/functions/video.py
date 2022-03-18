@@ -150,5 +150,5 @@ def show_distance(frame, distance: float, mode: str):
         color,
         1,
     )
-    
+
     return frame
