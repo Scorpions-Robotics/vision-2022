@@ -91,6 +91,8 @@ def on_press(key):  # sourcery skip: extract-duplicate-method
         r = 0
 
 
+import contextlib
+
 listener = keyboard.Listener(on_press=on_press)
 listener.start()
 
@@ -153,10 +155,8 @@ while True:
                 break
 
         else:
-            try:
+            with contextlib.suppress(Exception):
                 cap = camera.camera_init()
-            except Exception:
-                pass
 
     except (Exception, KeyboardInterrupt):
         break

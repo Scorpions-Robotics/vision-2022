@@ -1,3 +1,4 @@
+import contextlib
 import cv2
 from datetime import datetime
 from misc import functions
@@ -99,10 +100,8 @@ while True:
             )
 
         else:
-            try:
+            with contextlib.suppress(Exception):
                 cap = camera.camera_init()
-            except Exception:
-                pass
 
     except (Exception, KeyboardInterrupt) as e:
         print(e)
